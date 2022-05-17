@@ -1094,7 +1094,7 @@ function toggleLoading(show) {
 
 var goTopBtn = document.querySelector("#goTopBtn"); //當使用者y軸  超過 800 出現 goTopBtn ，反之消失
 
-document.addEventListener("scroll", handleScroll); //點擊 goTopBtn監聽事件，如果scrollY != 0 的話，執行 Window.scrollTo() 內的 平滑滾動至 0
+window.addEventListener("scroll", handleScroll); //點擊 goTopBtn監聽事件，如果scrollY != 0 的話，執行 Window.scrollTo() 內的 平滑滾動至 0
 
 if (goTopBtn !== null) {
   goTopBtn.addEventListener("click", scrollGoTop);
