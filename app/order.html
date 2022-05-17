@@ -1,0 +1,91 @@
+---
+title: 填寫訂單
+layout: ./app/layout.ejs
+engine: ejs
+current: order
+---
+
+<section class="py-5">
+  <div class="container">
+    <!-- 購物流程步驟 -->
+    <ul class="row  row-cols-2 row-cols-md-4 gy-3  text-center mb-5">
+      <li class="col">
+        <div class="order-process py-3">
+          <small>STEP 1</small>
+          <p>確認購物車</p>
+        </div>
+      </li>
+      <li class="col">
+        <div class="order-process-active py-3">
+          <small>STEP 2</small>
+          <p>填寫訂單資訊</p>
+        </div>
+      </li>
+      <li class="col ">
+        <div class="order-process py-3">
+          <small>STEP 3</small>
+          <p>確認付款資訊</p>
+        </div>
+      </li>
+      <li class="col ">
+        <div class="order-process py-3">
+          <small>STEP 4</small>
+          <p>完成訂購</p>
+        </div>
+      </li>
+    </ul>
+
+    <h2 class="text-center mb-5"><i class="bi bi-pencil-fill me-3 text-warning"></i>填寫訂單資訊</h2>
+    <!-- form 表單 加入驗證  -->
+    <div class="row justify-content-center mb-5">
+      <div class="col-md-8">
+        <form class=" px-3 px-md-5 py-6   shadow border-top border-4 border-success rounded" id="orderForm">
+          <div class="mb-3">
+            <label for="customerName" class="form-label">姓名</label>
+            <input type="text" class="form-control"  placeholder="請輸入訂購人姓名"  id="customerName" name="姓名">
+            <p class="message text-danger" data-message="姓名"></p>
+          </div>
+          <div class="mb-3">
+            <label for="customerEmail" class="form-label">電子郵件</label>
+            <input type="email" class="form-control"  placeholder="請輸入訂購人Email"  id="customerEmail" name="email">
+            <p class="message text-danger" data-message="email">  </p>
+          </div>
+          <div class="mb-3">
+            <label for="customerPhone" class="form-label">手機號碼</label>
+            <input type="tel" class="form-control" placeholder="請輸入訂購人電話" id="customerPhone" name="手機號碼">
+            <p class="message text-danger" data-message="手機號碼">  </p>
+          </div>
+          <div class="mb-3">
+            <label for="customerAddress" class="form-label">地址</label>
+            <input type="text" class="form-control"  placeholder="請輸入訂購人地址" id="customerAddress" name="地址">
+            <p class="message text-danger"  data-message="地址">  </p>
+          </div>
+          <div class="mb-3">
+            <label for="tradeWay" class="form-label" >付款方式</label>
+            <select class="form-select" id="tradeWay" name="付款方式">
+              <option value="" selected disabled>請選擇付款方式</option>
+              <option value="Apple Pay">Apple Pay</option>
+              <option value="Line pay">Line Pay</option>
+              <option value="街口支付">街口支付</option>
+              <option value="ATM轉帳">ATM轉帳</option>
+            </select>
+            <p class="message text-danger" data-message="付款方式">  </p>
+          </div>
+          <div class="mb-5">
+            <label for="customerMessage" class="form-label">備註</label>
+            <textarea name="Remarks" class="form-control" placeholder="請填寫備註" cols="30" rows="5" id="customerMessage"></textarea>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+    <div class="d-flex justify-content-between py-3" id="cartBtn-group">
+      <a href="./cart.html" class="btn btn-outline-primary btn-lg"><i
+          class="bi bi-caret-left  me-2"></i>回購物清單</a>
+      <a href="./payment.html"  type="submit" class="btn btn-primary btn-lg" id="submitFormBtn">填寫訂單<i class="bi bi-caret-right ms-2"></i></a>
+    </div>
+
+
+  </div>
+</section>

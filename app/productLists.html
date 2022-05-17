@@ -1,0 +1,60 @@
+---
+title: 菜單介紹
+layout: ./app/layout.ejs
+engine: ejs
+current: productLists
+---
+
+
+<header class="sub-banner d-flex  justify-content-center align-items-center p-5"
+  style="background-image: url(./assets/images/vegan-banner2.jpg);">
+  <h2 class="fw-bold">天然無添加的食材<span class="d-block mt-2">讓您吃的身體健康無負擔<span></h2>
+</header>
+
+<!-- 導覽與頁籤 (Navs and tabs) -->
+<nav class="nav custom-nav nav-pills flex-nowrap justify-content-center py-3  mb-5  mb-md-7 bg-light sticky-top"
+  id="btn-group" role="tablist">
+  
+    <a data-category="全部商品" href="#foodspace" class="nav-link active" aria-controls="pills-allProduts">全部商品</a>
+  
+  
+    <a data-category="沙拉" class="nav-link"  aria-controls="pills-salad" aria-selected="false">沙拉</a>
+
+  
+    <a data-category="主餐" class="nav-link" aria-controls="pills-maincourse">主餐</a>
+  
+ 
+    <a data-category="飲品"  class="nav-link"  aria-controls="pills-beverage" >飲品</a>
+  
+  
+    <a data-category="甜點"  class="nav-link"   aria-controls="pills-dessert">甜點</a>
+ 
+</nav>
+
+<!-- 菜單列表 -->
+<section class="mb-5 mb-md-7">
+  <div class="container mb-5 mb-md-7">
+    <!--導覽與頁籤 (Navs and tabs) 對應的內容
+        <!-- 菜單結構內的各種類別 -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="./index.html">首頁</a></li>
+            <li class="breadcrumb-item"><a href="./productLists.html">餐點介紹</a></li>
+            <li class="breadcrumb-item active" aria-current="page" id="productsCategory">全部商品</li>
+          </ol>
+        </nav>
+        
+        <!-- 菜單內容   -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 mb-5" id="productsList">
+          
+        </div>
+      
+
+    <!-- 分頁 -->
+    <nav aria-label="Page navigation ">
+      <ul class="pagination mb-0 justify-content-center" id="pageId"> 
+      </ul>
+    </nav>
+  </div>
+</section>
+

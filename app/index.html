@@ -1,58 +1,391 @@
 ---
-title: Boostrap Index
+title: 首頁
 layout: ./app/layout.ejs
 engine: ejs
 current: index
 ---
 
-<div class="container">
-  <h1 class="index__h1">這是一段話</h1>
-  <div class="alert alert-primary" role="alert">
-    A simple primary alert—check it out!
+  <!-- 回到頂部 -->
+  <div class="goTop position-fixed">
+    <a class="text-dark  d-none" href="#" id="goTopBtn">
+      <i class="bi bi-arrow-up-circle-fill text-success display-6"></i>
+    </a>
   </div>
-  <div class="alert alert-secondary" role="alert">
-    A simple secondary alert—check it out!
-  </div>
-  <div class="alert alert-success" role="alert">
-    A simple success alert—check it out!
-  </div>
-  <div class="alert alert-danger" role="alert">
-    A simple danger alert—check it out!
-  </div>
-  <div class="alert alert-warning" role="alert">
-    A simple warning alert—check it out!
-  </div>
-  <div class="alert alert-info" role="alert">
-    A simple info alert—check it out!
-  </div>
-  <div class="alert alert-light" role="alert">
-    A simple light alert—check it out!
-  </div>
-  <div class="alert alert-dark" role="alert">
-    A simple dark alert—check it out!
-  </div>
-</div>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button>
+<!-- 首頁 swiper 背景圖 -->
+<header>
+    <div class="swiper swiper-heroBanner">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide  swiper-Banner"
+                style="background-image: url('./assets/images/banner-herobanner.jpg')">
+                <div class="bg-cover  p-3  py-md-4">
+                    <h2 class="display-5   fw-bold  mb-3"><span style="font-family: Kalam;">Vegan life</span>，簡約生活
+                    </h2>
+                    <p class="fs-5   mb-3 ">友善環境，愛護地球。
+                        檢視生活所需用品，從我們從斷捨離開始！
+                    </p>
+                    <div class="mb-3">
+                        <a class="btn btn-primary btn-lg me-4" href="./productLists.html">立即點餐</a>
+                        <a class="btn btn-secondary btn-lg" href="./foodSpace.html">餐飲空間</a>
+                    </div>
+                    <div class="goDown   display-6   fw-bold" data-aos="fade-up" data-aos-delay="800">
+                        <i class="bi bi-chevron-double-down"></i>
+                    </div>
+                </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+
+            </div>
+            <div class="swiper-slide d-flex justify-content-center align-items-center swiper-Banner"
+                style="background-image: url('./assets/images/herobanner2.png')">
+                <div class="bg-cover p-3  p-md-4">
+                    <h2 class="display-5 fw-bold mb-3"><span style="font-family: Kalam;">Vegan Food</span>，飲食新型態
+                    </h2>
+                    <p class="fs-5 mb-3">純素者的最佳首選，嚴選食材、營養美味。</p>
+                    <div class="mb-5">
+                        <a class="btn btn-primary btn-lg me-4" href="./productLists.html">立即點餐</a>
+                        <a class="btn btn-secondary btn-lg" href="./foodSpace.html">餐飲空間</a>
+                    </div>
+
+                    <div class="goDown   display-6   fw-bold" data-aos="fade-up" data-aos-delay="800">
+                        <i class="bi bi-chevron-double-down"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide d-flex justify-content-center align-items-center swiper-Banner"
+                style="background-image: url('./assets/images/herobanner3.jpg')">
+                <div class="bg-cover p-3  p-md-4">
+                    <h2 class="display-5 fw-bold mb-3 fw-bold mb-3 ">綠色建築‧餐飲空間</h2>
+                    <p class="fs-5  mb-3 ">採用綠色植栽和自然採光，打造節能減碳的用餐環境。</p>
+                    <div class="mb-5 ">
+                        <a class="btn btn-primary btn-lg me-4" href="./productLists.html">立即點餐</a>
+                        <a class="btn btn-secondary btn-lg" href="./foodSpace.html">餐飲空間</a>
+                    </div>
+
+                    <div class="goDown   display-6   fw-bold" data-aos="fade-up" data-aos-delay="800">
+                        <i class="bi bi-chevron-double-down"></i>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
     </div>
-  </div>
-</div>
+</header>
+
+<!--  最新消息  -->
+<section class="py-6">
+    <div class="container" data-aos="fade-up">
+        <div class="swiper swiper-news">
+            <ul class="swiper-wrapper mb-6">
+                <li class="swiper-slide text-center">
+                    <a class="d-block mb-3" href="#"> <i class="bi bi-clock custom-icon-clock"></i></a>
+                    <h3 class="fw-bold  mb-3"> 內用營業時間</h3>
+                    <p>目前嚴重特殊傳染性肺炎（COVID-19)<br>
+                        疫情期間，暫時不開放內用餐飲空間</p>
+                </li>
+                <li class="swiper-slide text-center">
+                    <a class="d-block mb-3" href="#"><i class="bi bi-handbag  custom-icon-handbag"></i></a>
+                    <h3 class="fw-bold mb-3"> 訂購餐點</h3>
+                    <p>可透過App訂餐或官網訂餐</p>
+                </li>
+                <li class="swiper-slide text-center">
+                    <a class="d-block mb-3" href="#"> <i class="bi bi bi-line custom-icon-line"></i></a>
+                    <h3 class="fw-bold">LINE 訊息服務</h3>
+                    <p>有餐點或訂餐問題可使用 LINE 線上諮詢</p>
+                    <p>訊息回復時間為09:00 - 21:00</p>
+                </li>
+            </ul>
+            <div class="swiper-pagination swiper-pagination-bullets-dynamic"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- 經營理念  -->
+<section class="bg-light mb-5 mb-md-7 py-5">
+    <div class="container" data-aos="fade-up">
+        <div class="row  flex-sm-row-reverse justify-content-center align-items-center">
+            <div class="col-md-6 mb-4 mb-md-0">
+                <div class="row justify-content-lg-end">
+                    <div class="col-md-10">
+                        <h2 class="fw-bold mb-3">產地直送、健康美味</h2>
+                        <p class="mb-2">選用當季採收農產品，讓您品嚐到食材的最佳風味</p>
+                        <p class="mb-2">並與在地小農建立友善契作平台</p>
+                        <p class="mb-3">採用友善農法耕作，使大自然達到環境永續</p>
+                        <a class="btn btn-outline-success" href="./about.html">查看理念 →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <img class="img-fluid rounded" src="./assets/images/banner2.jpg" alt="banner2">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- 主廚推薦菜單-->
+<section class="mb-5 mb-md-7" data-aos="fade-up">
+    <h2 class=" text-center mb-4  fw-bold">主廚推薦</h2>
+    <p class="text-center mb-5">每日新鮮採收的食材，經過餐廳團隊的創意製作出的精選餐點</p>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-3" id="selectProductsList">
+        </div>
+    </div>
+</section>
+
+
+<!-- 餐飲空間 -->
+<section class="bg-light py-5 mb-5 mb-md-7">
+    <div class="container" data-aos="fade-up">
+        <div class="row  align-items-center">
+            <div class="col-md-6 mb-3 mb-md-0">
+                <div class="row justify-content-lg-end">
+                    <div class="col-md-10">
+                        <h2 class=" fw-bold mb-3">綠色餐廳、環境舒適</h2>
+                        <p class="mb-2">打造環保永續的綠色餐廳，舒適寬敞的用餐環境，</p>
+                        <p class="mb-3">絕對是您的第一首選。</p>
+                        <a class="btn btn-outline-success" href="./foodSpace.html">環境介紹 →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="row flex-column justify-content-between h-100">
+                            <div class="col-12 mb-3 mb-md-0">
+                                <img class="img-fluid rounded" src="./assets/images/餐廳頂樓M.jpg" alt="餐廳環境">
+                            </div>
+                            <div class="col-12 mb-3 mb-md-0">
+                                <img class="img-fluid rounded" src="./assets/images/頂樓M.jpg" alt="餐廳環境">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 mb-3 mb-md-0">
+                        <img class="img-fluid rounded" src="./assets/images/沙發區.jpg" alt="餐廳環境">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 團隊介紹 -->
+<section class="text-center  mb-5 mb-md-7">
+    <div class="container" data-aos="fade-up">
+        <h2 class=" text-center mb-4 fw-bold">團隊介紹</h2>
+        <p class="text-center mb-5 ">團隊成員先後在各國的米其林餐廳服務過，為您提供專業的廚藝技術和服務禮儀。</p>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 gy-3 ">
+            <div class="col">
+                <img class="img-fluid rounded-circle mb-3" src="./assets/images/team-executive chef.jpg" alt="行政主廚"
+                    style="width:10rem">
+                <h3>行政主廚</h3>
+                <p class="text-muted">Dennie</p>
+            </div>
+            <div class="col">
+                <img class="img-fluid rounded-circle mb-3" src="./assets/images/team-dessert chef.jpg" alt="甜點主廚"
+                    style="width:10rem">
+                <h3>甜點主廚</h3>
+                <p class="text-muted">Elsa</p>
+            </div>
+            <div class="col">
+                <img class="img-fluid rounded-circle mb-3" src="./assets/images/team-manager.jpg" alt="外場經理"
+                    style="width:10rem">
+                <h3>外場經理</h3>
+                <p class="text-muted">Jimmy</p>
+            </div>
+            <div class="col">
+                <img class="img-fluid rounded-circle mb-3" src="./assets/images/team-wine steward.jpg" alt="侍酒師"
+                    style="width:10rem">
+                <h3>侍酒師</h3>
+                <p class="text-muted">Lisa</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- 顧客評價 -->
+<section class="bg-light py-5 mb-5 mb-md-7" data-aos="fade-up">
+    <h2 class=" text-center mb-4  fw-bold">顧客評價</h2>
+    <div class="container">
+        <div class="swiper swiper-recommend">
+            <ul class="swiper-wrapper mb-6">
+                <li class="swiper-slide ">
+                    <div class="bg-white rounded p-3 mb-5 shadow-sm position-relative">
+                        <p>
+                            <span class="text-warning me-3">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                            </span>
+                            很棒的用餐環境，經營團隊很用心，下次會再光臨。
+                        </p>
+                        <a class="text-danger text-end d-block" href="#"><i class="bi bi-google"></i></a>
+                        <span class="custom-triangle-icon">
+                        </span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <img class="img-fluid mx-4" src="./assets/images/顧客1-s.png" alt="顧客評論">
+                        <p>Mei Lee
+                            <span class="mb-0 d-block">10/17/2021 </span>
+                        </p>
+                    </div>
+                </li>
+                <li class="swiper-slide ">
+                    <div class="bg-white rounded p-3 mb-5 shadow-sm position-relative">
+                        <p>
+                            <span class="text-warning me-3">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                            </span>
+                            婚宴場地真的很棒，餐點味道一級棒!
+                        </p>
+                        <a class="text-danger text-end d-block" href="#"> <i class="text-info bi bi-meta"></i></a>
+                        <span class="custom-triangle-icon">
+                        </span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <img class="img-fluid mx-4" src="./assets/images/顧客 2-s.png" alt="顧客評論">
+                        <p>Mary Lin
+                            <span class="mb-0 d-block">4/01/2021 </span>
+                        </p>
+                    </div>
+                </li>
+                <li class="swiper-slide ">
+                    <div class="bg-white rounded p-3 mb-5 shadow-sm position-relative">
+                        <p>
+                            <span class="text-warning me-3">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                            </span>
+                            甜點和下午茶很好吃，滿適合情侶來這邊約會拍照的唷!
+                        </p>
+                        <a class="text-danger text-end d-block" href="#"> <i class="text-info bi bi-meta"></i></a>
+                        <span class="custom-triangle-icon">
+                        </span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <img class="img-fluid mx-4" src="./assets/images/顧客 3-s.png" alt="顧客評論">
+                        <p>Jenny Chen
+                            <span class="mb-0 d-block">1/01/2022 </span>
+                        </p>
+                    </div>
+                </li>
+                <li class="swiper-slide ">
+                    <div class="bg-white rounded p-3 mb-5 shadow-sm position-relative">
+                        <p>
+                            <span class="text-warning me-3">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                            </span>
+                            巴西莓果碗和布朗尼真的很好吃，大推!
+                        </p>
+                        <a class="text-danger text-end d-block" href="#"><i class="bi bi-google"></i></a>
+                        <span class="custom-triangle-icon">
+                        </span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <img class="img-fluid mx-4" src="./assets/images/顧客 4-S.png" alt="顧客評論">
+                        <p>Jimmy Fang
+                            <span class="mb-0 d-block">4/01/2022 </span>
+                        </p>
+                    </div>
+                </li>
+                <li class="swiper-slide ">
+                    <div class="bg-white rounded p-3 mb-5 shadow-sm position-relative">
+                        <p>
+                            <span class="text-warning me-3">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                            </span>
+                            罐裝黎麥沙拉有豐富的營養和維他命，適合愛吃肉的一族，平衡身體負擔。
+                        </p>
+                        <a class="text-danger text-end d-block" href="#"><i class="bi bi-google"></i></a>
+                        <span class="custom-triangle-icon">
+                        </span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <img class="img-fluid mx-4" src="./assets/images/顧客 5-s.png" alt="顧客評論">
+                        <p>Danny chou
+                            <span class="mb-0 d-block">3/01/2022 </span>
+                        </p>
+                    </div>
+                </li>
+                <li class="swiper-slide ">
+                    <div class="bg-white rounded p-3 mb-5 shadow-sm position-relative">
+                        <p>
+                            <span class="text-warning me-3">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                            </span>
+                            二樓包廂區景觀真的很美，餐點味道很棒，服務人員很帥!
+                        </p>
+                        <a class="text-danger text-end d-block" href="#"> <i class="text-info bi bi-meta"></i></a>
+                        <span class="custom-triangle-icon">
+                        </span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <img class="img-fluid mx-4" src="./assets/images/顧客 6 -s.png" alt="顧客評論">
+                        <p>Alexandra Lin
+                            <span class="mb-0 d-block">6/15/2021</span>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+            <div class="swiper-pagination swiper-pagination-bullets-dynamic"></div>
+        </div>
+    </div>
+    </div>
+</section>
+
+
+
+<!--餐廳位置-->
+<section class="py-5">
+    <div class="container" data-aos="fade-up">
+        <h2 class=" text-center mb-4  fw-bold">交通資訊與餐廳位置</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <p class="mb-4 text-center text-muted">- 因為停車不易，鼓勵搭乘大眾運輸前往 -</p>
+                <div class="py-3 py-md-5">
+                    <p class="mb-4"><span class="fw-bold me-2">捷運:</span> 搭乘捷運文湖線，往南港展覽館方向搭乘，至捷運大湖公園站內即可下車。</p>
+                    <p class="mb-4"><span class="fw-bold me-2">公車:</span> 從台北車站出發，可選擇搭乘內湖幹線，到捷運大湖公園站下車。</p>
+                    <p class="mb-4"><span
+                            class="fw-bold me-2">YouBike:</span>可在捷運內湖站先下車，附近皆有YouBike租賃站，並往成功路五段方向行駛在右手邊即可看到捷運大湖公園站。
+                    </p>
+                    <p class="mb-4"><span class="fw-bold me-2">開車:</span>往內湖方向行駛到成功路五段，在右手邊即可看到捷運大湖公園站。</p>
+                </div>
+            </div>
+            <div class="col-md-6 ">
+                <p class="mb-4 text-center text-muted">- 位於大湖公園捷運站內 -</p>
+                <div class="ratio ratio-4x3">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3613.5335164818703!2d121.60001781498015!3d25.083795283949044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442aceba99428e7%3A0xcca3759a6a6de055!2z5aSn5rmW5YWs5ZyS56uZ!5e0!3m2!1szh-TW!2stw!4v1651639347264!5m2!1szh-TW!2stw"
+                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

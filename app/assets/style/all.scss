@@ -1,6 +1,42 @@
+
+// 套件區
+// google fonts
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Noto+Sans+TC:wght@400;700&display=swap');
+
+// Bootstrap 5 icons
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
+
+// Bootstrap 5
 @import "../../../node_modules/bootstrap/scss/functions";
 @import "./helpers/variables";
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
+// Aos
+@import "../../../node_modules/aos/dist/aos";
 
-@import './layout/index.scss'
+
+
+
+//custom-scss
+// bsse 
+@import './base/reset';
+
+// helper
+@import './helpers/mixins';
+
+// components
+@import './componets/banner';
+@import './componets/arrows';
+@import './componets/custom-offcanvas';
+@import './componets/custom-nav';
+@import './componets/custom-card';
+@import './componets/custom-icons';
+@import './componets/order-process';
+@import './componets/custom-dropDown';
+@import './componets/loading';
+
+// vendors
+@import './vendors/custom-swiper';
+
+// layout
+@import './layout/logo';

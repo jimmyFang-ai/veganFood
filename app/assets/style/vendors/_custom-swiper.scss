@@ -1,0 +1,50 @@
+ .swiper {
+   width: 100%;
+   height: 100%;
+ }
+
+ 
+// 首頁 header banner區塊
+  .swiper-Banner {
+    @include banner-cover-center(100vh);
+  }
+
+ 
+// 主廚推薦區塊
+// .swiper-products {
+//   .swiper-wrapper {
+//     height: 1300px;
+//   } 
+  
+//   @include media-breakpoint-up(md){
+//     .swiper-wrapper {
+//       height: auto;
+//     }
+//   }
+// }
+
+
+//分頁  active 顏色
+.swiper-recommend  .swiper-pagination-bullet-active, .swiper-news .swiper-pagination-bullet-active {
+	background-color:$primary;
+}
+
+// 方向按鈕
+.swiper-button-prev ,.swiper-button-next {
+  color:  hsla(0,0%,80%,.6);
+}
+
+.swiper-button-prev {
+  left: 1px;
+  right: auto;
+}
+
+.swiper-button-next {
+    right: 1px;
+    left: auto;
+}
+
+
+.swiper-button-prev::after ,.swiper-button-next::after {
+  font-size: 24px;
+} 

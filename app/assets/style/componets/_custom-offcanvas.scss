@@ -1,0 +1,10 @@
+.custom-offcanvas {
+    &-header {
+        border-bottom: 1px solid $light;
+    }
+
+    &-body {
+        border-bottom: 1px solid $light;
+        flex-grow: 0;
+    }
+}

@@ -1,0 +1,76 @@
+// 製作 菜單圖片hover 放大，出現文字效果
+.custom-card {
+   .card-img-top {
+    height: 280px;
+    object-fit: cover;
+    transition:  .5s;
+  }
+
+   .card-img-text {
+    @include img-overlay;
+    color: white;
+    background: rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition:  .5s;
+ }
+
+ .card-img-wrap {
+  position: relative;
+  overflow: hidden;
+ }
+
+ .btn-outline-success {
+  transition:  .5s;
+ }
+}
+
+// 卡片 hover 效果
+.custom-card {
+// 補上滑入按鈕色彩
+&:hover .btn-outline-success {
+  color: #fff;
+  background-color: $green;
+}
+
+&:hover .card-img-text {
+    overflow: hidden;
+    opacity: 1;
+ }
+
+&:hover .card-img-top {
+    transform: scale(1.2);
+  }
+}
+
+
+// 餐飲空間 卡片
+.custom-card {
+  overflow: hidden;
+  .card-img {
+    transition:  .5s;
+  }
+  
+  .card-title {
+    &::after {
+      content: "";
+      display: block;
+      width: 0%; //一開始線條為 0
+      height: 4px;
+      margin: 10px 0;
+      background-color: $danger;
+      transition: width 0.5s 0.3s;
+  }
+  }
+
+  &:hover .card-img {
+    transform: scale(1.2);
+  }
+
+  &:hover .card-title::after {
+    width: 100%;
+  }
+}

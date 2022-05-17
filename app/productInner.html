@@ -1,0 +1,97 @@
+---
+title: 菜單描述
+layout: ./app/layout.ejs
+engine: ejs
+current: productInner
+---
+
+
+<header class="sub-banner d-flex  justify-content-center align-items-center p-5 mb-5"
+    style="background-image: url(./assets/images/vegan-banner2.jpg);">
+    <h2 class="fw-bold">餐點內容介紹</h2>
+</header>
+
+
+<section class="mb-5 mb-md-7">
+    <div class="container" id="productInnerList">
+        <!-- 餐點內頁內容 -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="./productLists.html">全部商品</a></li>
+                <li class="breadcrumb-item"><a href="./productLists.html" id="breadcrumb-productCategory"></a></li>
+                <li class="breadcrumb-item active" aria-current="page" id="breadcrumb-productTitle"></li>
+            </ol>
+        </nav>
+        <!-- 菜單描述內容 -->
+        <div class="row  align-items-center   mb-5">
+            <!-- 菜單圖片 -->
+            <div class="col-lg-6">
+                <img src="" class="img-fluid rounded-3"  id="productImg">
+            </div>
+            <!-- 菜單訂購 -->
+            <div class="col-lg-6">
+                <div class="p-4">
+                    <h2 class="fw-bold my-3 text-success" id="productTitle"></h2>
+                    <p class="fs-5" id="productDescription"></p>
+                    <ul>
+                        <li>
+                            <i class="bi bi-person-plus-fill fs-3 me-4 custom-icon-middle"></i>加入會員可享更多優惠
+                        </li>
+                        <li>
+                            <i class="bi bi-bicycle fs-2 me-4 custom-icon-middle"></i>三公里以內距離免費外送
+                        </li>
+                    </ul>
+                    <p class="fs-3 text-warning fw-bold mb-3">售價: NT$ <span id="productPrice">NT$</span></p>
+                    <div class="d-flex align-items-center" id="productNumWrap">
+                        <div class="input-group w-50 me-3">
+                            <button type="button" class="btn btn-dark btn-sm" id="minusNumBtn">
+                                <i class="bi bi-dash"></i>
+                            </button>
+                            <input type="number" class="form-control text-center" id="productNum" value="1" min="1" readonly>
+                            <button type="button" class="btn btn-dark btn-sm" id="plusNumBtn">
+                                <i class="bi bi-plus"></i>
+                            </button>
+                        </div>
+                        <button type="button" class="btn btn-success  shadow-none  w-50 p-2" data-product-id=""
+                            id="addCartBtn">
+                            <i class="bi bi-cart-plus fs-5  me-2"></i>
+                            加入購物車
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 菜單規格及注意事項 -->
+        <nav>
+            <div class="nav  nav-pills  nav-fill flex-nowrap mb-4 overflow-auto" id="nav-tab" role="tablist"
+                style="white-space: nowrap">
+                <button class="nav-link active" id="nav-describe-tab" data-bs-toggle="tab"
+                    data-bs-target="#nav-describe" type="button" role="tab" aria-controls="nav-describe"
+                    aria-selected="true">餐點說明</button>
+                <button class="nav-link" id="nav-standard-tab" data-bs-toggle="tab" data-bs-target="#nav-standard"
+                    type="button" role="tab" aria-controls="nav-standard" aria-selected="true">餐點規格</button>
+                <button class="nav-link" id="nav-delivery-tab" data-bs-toggle="tab" data-bs-target="#nav-delivery"
+                    type="button" role="tab" aria-controls="nav-delivery" aria-selected="false">付款與運送</button>
+                <button class="nav-link" id="nav-notice-tab" data-bs-toggle="tab" data-bs-target="#nav-notice"
+                    type="button" role="tab" aria-controls="nav-notice" aria-selected="false">注意事項</button>
+            </div>
+        </nav>
+
+        <div class="tab-content mb-5 mb-md-7" id="nav-tabContent">
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="bg-light  py-5">
+    <div class="container">
+        <!--熱銷餐點 -->
+        <h2 class="mb-5 text-center fw-bold">熱銷餐點</h2>
+        <!-- 菜單內容   -->
+        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-3" id="popularProductList">
+        </div>
+    </div>
+</section>

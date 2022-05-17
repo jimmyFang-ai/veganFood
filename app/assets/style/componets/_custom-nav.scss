@@ -1,0 +1,22 @@
+
+.custom-nav {
+    top: 72px;
+    overflow: auto;
+    white-space: nowrap;
+    z-index: 99;
+}
+
+.custom-nav{
+ &-link {
+     display: block;
+     color: $gray-500;
+     transition: color .3s ease-in-out;
+     cursor: pointer;
+     &:hover {
+         color: $primary;
+     }
+ }
+ &-active {
+    color: $primary;
+}
+}

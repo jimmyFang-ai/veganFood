@@ -1,0 +1,14 @@
+@mixin banner-cover-center($height){
+    height: $height;
+    background: no-repeat center center;
+    background-size: cover;
+}
+
+
+@mixin img-overlay{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}

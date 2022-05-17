@@ -1,0 +1,9 @@
+.order-process {
+    color: $success;
+    border: 1px solid $success;
+    &-active {
+        background: $success;
+        color: $white;
+        border: 1px solid $success;
+    }
+}

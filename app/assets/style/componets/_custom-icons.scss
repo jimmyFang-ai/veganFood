@@ -1,0 +1,48 @@
+
+.custom-icon-middle::before {
+    vertical-align: middle;
+    font-size: 20px;
+};
+
+
+// 愛心icon
+.favoriteBtn{
+    right: 5%;
+    border-color: $danger;
+    transition: 0.3s ease-in-out; 
+    &:hover {
+        transform: scale(1.2);
+    };
+};
+
+.custom-icon-heart , .custom-icon-heart-fill{
+    vertical-align: middle;
+    font-size: 24px;
+};
+
+
+
+
+// 三角形製作
+.custom-triangle-icon::after {
+    content: '';
+    display: block;
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    bottom: -30px;
+    left: 15%;
+    filter: drop-shadow(2px 2px 1px rgba(0,0,0,.0980392));
+    border-top: 30px solid #fff;
+    border-right: 30px solid transparent;
+    border-bottom: 0 solid transparent;
+    border-left: 0 solid transparent;
+
+}
+
+// 最新消息 的 icon
+.custom-icon-clock::before, .custom-icon-handbag::before, .custom-icon-line::before {
+    vertical-align: middle;
+    font-size: 48px;
+    color: $success;
+}

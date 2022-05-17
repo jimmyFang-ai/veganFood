@@ -1,0 +1,9 @@
+.favorite-dropdown-menu {
+    min-width: 300px;
+}
+
+@include media-breakpoint-up(md) {
+    .favorite-dropdown-menu {
+        min-width: 400px;
+    }
+}

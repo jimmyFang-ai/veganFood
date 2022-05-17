@@ -1,0 +1,84 @@
+---
+title: 確認購物車
+layout: ./app/layout.ejs
+engine: ejs
+current: cart
+---
+
+<section class="py-5">
+    <div class="container">
+        <!-- 購物流程步驟 -->
+        <ul class="row    row-cols-2 row-cols-md-4 gy-3  text-center mb-5">
+            <li class="col">
+                <div class="order-process-active py-3">
+                    <small>STEP 1</small>
+                    <p>確認購物車</p>
+                </div>
+            </li>
+            <li class="col">
+                <div class="order-process py-3">
+                    <small>STEP 2</small>
+                    <p>填寫訂單資訊</p>
+                </div>
+            </li>
+            <li class="col ">
+                <div class="order-process text-success py-3">
+                    <small>STEP 3</small>
+                    <p>確認付款資訊</p>
+                </div>
+            </li>
+            <li class="col ">
+                <div class="order-process text-success py-3">
+                    <small>STEP 4</small>
+                    <p>完成訂購</p>
+                </div>
+            </li>
+        </ul>
+
+        <h2 class="text-center mb-5"><i class="bi bi-cart-fill text-warning me-3"></i>確認購物車內容</h2>
+
+
+        <!-- 購買商品清單 -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-10">
+                <div class="shadow table-responsive">
+                    <table class="table align-middle  mb-0">
+                        <!-- thead -->
+                        <thead class="table-light text-center text-nowrap ">
+                            <!-- align-middle 僅用於 行內元素 及 table 表單使用， 區塊元素使用flex -->
+                            <tr class="align-middle">
+                                <!-- scope="col" 以欄為範圍 垂直排列 -->
+                                <th width="40%">商品資訊</th>
+                                <th width="35%">購買數量</th>
+                                <th width="20%">小計</th>
+                                <th width="5%"></th>
+                            </tr>
+                        </thead>
+                        <!-- tbody -->
+                        <tbody class="text-center text-nowrap" id="checkCartList">
+                            
+                        </tbody>
+                        <!-- tfoot -->
+                        <tfoot id="cartAccout" style="border-color: white;">
+                            <tr>
+                                <td colspan="1">
+                                    <button type="button" class="btn btn-outline-danger" id="delAllCartBtn">清空購物車</button>
+                                </td>
+                                <td class="text-end  fw-bold py-4" colspan="3">
+                                    總價: NT$ <span id="cartTotalPrice">380</span>元
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+       
+
+        <div class="d-flex justify-content-between py-3" id="cartBtn-group">
+            <a href="./productLists.html" class="btn btn-outline-primary btn-lg"><i
+                    class="bi bi-caret-left  me-2"></i>繼續選購</a>
+            <a href="./order.html" class="btn btn-primary btn-lg">填寫訂單<i class="bi bi-caret-right ms-2"></i></a>
+        </div>
+    </div>
+</section>
