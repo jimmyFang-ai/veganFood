@@ -1092,16 +1092,19 @@ function toggleLoading(show) {
 ; // gotop 回到頂部 
 // goTop Dom
 
-var goTopBtn = document.querySelector("#goTopBtn"); //當使用者y軸  超過 800 出現 goTopBtn ，反之消失
-
-window.addEventListener("scroll", handleScroll); //點擊 goTopBtn監聽事件，如果scrollY != 0 的話，執行 Window.scrollTo() 內的 平滑滾動至 0
+var goTopBtn = document.querySelector("#goTopBtn");
 
 if (goTopBtn !== null) {
-  goTopBtn.addEventListener("click", scrollGoTop);
+  //點擊 goTopBtn監聽事件，如果scrollY != 0 的話，執行 Window.scrollTo() 內的 平滑滾動至 0
+  goTopBtn.addEventListener("click", scrollGoTop); //當使用者y軸  超過 800 出現 goTopBtn ，反之消失
+
+  document.addEventListener("scroll", handleScroll);
 }
 
+;
+
 function handleScroll() {
-  if (window.scrollY >= 800) {
+  if (window.scrollY >= 600) {
     goTopBtn.classList.remove("d-none");
     goTopBtn.classList.add("d-block");
   } else {
