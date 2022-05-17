@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="description"
+    content="歐美倡導的飲食新風貌，Vegan(純素飲食)，選用對環境友善的食材、為您提供營養滿分的純素飲食，迫不及待要大快朵頤了嗎? 請快到 VeganFood 官網訂餐吧!" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="VeganFood 餐廳網站" />
+  <meta property="og:description"
+    content="歐美倡導的飲食新風貌，Vegan(純素飲食)，選用對環境友善的食材、為您提供營養滿分的純素飲食，迫不及待要大快朵頤了嗎? 請快到 VeganFood 官網訂餐吧!">
+  <meta property="og:image" content="https://i.imgur.com/0JG4syj.png" />
+  <meta property="og:url" content="https://jimmyfang-ai.github.io/Bootstrap5-VeganFood/" />
+
+  <title>
+    餐飲空間
+  </title>
+
+  <!-- VALIDATE.JS -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
+  <!-- Swiper-->
+  <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+
+
+  <link rel="stylesheet" href="./assets/style/all.css">
+</head>
+
+
+<body>
+
+  <!-- 導覽列 -->
+  <nav class="navbar  navbar-expand-lg navbar-light  bg-white py-3 sticky-top shadow-sm">
+    <div class="container">
+
+      <!-- 漢堡按鈕 -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- logo -->
+      <h1 class="mb-0"><a class="logo fw-bold fs-2 text-center me-0 " href="./index.html"
+          style="font-family: Kalam;">VeganFood</a>
+      </h1>
+
+
+      <!-- 購物車和我的最愛 -->
+      <div class="order-lg-3">
+        <ul class="d-flex flex-row align-items-center mb-0">
+          <li class="dropdown">
+            <a class="nav-link px-2 " href="#" role="button"
+              id="dropdownMenuOffset" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="10,20"><i
+                class="bi bi-heart-fill custom-icon-middle"></i>
+              <span class="position-absolute  top-20  translate-middle badge rounded-pill bg-danger" id="favoriteNum">
+                0
+              </span>
+            </a>
+            <div class="dropdown-menu favorite-dropdown-menu dropdown-menu-end  p-3 me-md-2 mt-2"
+              aria-labelledby="dropdownMenuLink" style="z-index: 1024;">
+              <h5 class="fw-bold py-3 mb-0">已收藏餐點</h5>
+              <table class="table table-responsive  align-middle text-center mb-0" id="favoriteTable">
+                <thead class="table-dark">
+                  <tr>
+                    <th width="40%">餐點圖片</th>
+                    <th width="35%">餐點名稱</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="favoriteList">
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="3" class="border-0">
+                      <button type="button" class="btn  btn-danger  shadow-none" id="delAllFavoriteBtn">刪除所有收藏</button>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </li>
+
+          <li>
+            <a class="position-relative  nav-link px-2" data-bs-toggle="offcanvas" href="#cart-offcanvas" role="button"
+              aria-controls="cart-offcanvas">
+              <i class="bi bi-cart-fill custom-icon-middle"></i>
+              <span class="position-absolute top-20  translate-middle badge rounded-pill bg-danger" id="cartNum">
+                0
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 下拉式選單 -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav align-items-center ms-auto   mb-0 ">
+          <li class="nav-item">
+            <a class="nav-link " href="./about.html">經營理念</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link " href="./productLists.html">菜單介紹</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="./foodSpace.html">餐飲空間</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link " href="./qa.html">常見問題</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+
+  
+<header class="sub-banner d-flex  justify-content-center align-items-center p-5 mb-5 mb-md-7"
+    style="background-image: url(./assets/images/vegan-banner2.jpg);">
+    <h2 class="fw-bold">餐飲空間介紹</h2>
+</header>
+
+  <!-- 餐飲空間 -->
+<section class="mb-5 mb-md-7">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="./index.html">首頁</a></li>
+                <li class="breadcrumb-item active" aria-current="page">餐飲空間</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <!-- 空間 -->
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-lg-12 mb-3">
+                        <div class="card custom-card  text-white">
+                            <img src="./assets/images/一樓大廳區 20人.jpg" class="card-img" alt="餐飲空間">
+                            <div class="card-img-text  justify-content-center align-items-center   justify-content-lg-end align-items-lg-start p-2  p-lg-4">
+                                <h5 class="card-title fw-bold">一樓大廳區</h5>
+                                <p class="card-text">左側為餐廳接待區，寬敞明亮的用餐空間，<br>適合情侶和朋友聚餐打卡的好地點，並且提供下午茶及甜點。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card custom-card  ratio ratio-1x1  text-white">
+                            <img src="./assets/images/一樓落地窗.jpg" class="card-img" alt="餐飲空間">
+                            <div class="card-img-text justify-content-center align-items-center   justify-content-lg-end align-items-lg-start p-2  p-lg-4">
+                                <h5 class="card-title fw-bold">一樓落地窗區</h5>
+                                <p class="card-text">明亮採光及開闊的空間視覺，座位多採用高腳椅居多，適合上班族。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card custom-card  ratio ratio-1x1  text-white">
+                            <img src="./assets/images/沙發區.jpg" class="card-img" alt="餐飲空間">
+                            <div
+                                class="card-img-text justify-content-center align-items-center   justify-content-lg-end align-items-lg-start p-2  p-lg-4">
+                                <h5 class="card-title fw-bold">二樓景觀包廂區</h5>
+                                <p class="card-text">完美的俯瞰都市的絕佳視野，適合家庭聚餐、商務會議的景觀包廂。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card custom-card  ratio ratio-1x1  text-white">
+                            <img src="./assets/images/頂樓.jpg" class="card-img" alt="餐飲空間">
+                            <div
+                                class="card-img-text justify-content-center align-items-center   justify-content-lg-end align-items-lg-start p-2  p-lg-4">
+                                <h5 class="card-title fw-bold">頂樓戶外景觀區A</h5>
+                                <p class="card-text">採用多種植栽綠化環境降低室內溫度，座位由中間接梯分層兩側，適合新人結婚的婚宴場地。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card custom-card  ratio ratio-1x1  text-white">
+                            <img src="./assets/images/頂樓室內.jpg" class="card-img" alt="餐飲空間">
+                            <div
+                                class="card-img-text  justify-content-center align-items-center   justify-content-lg-end align-items-lg-start p-2  p-lg-4">
+                                <h5 class="card-title fw-bold">頂樓戶外景觀區B</h5>
+                                <p class="card-text">採用透明綠建材，可有效的控制室內溫度及提供明亮的採光，並布置綠色植栽提升空氣品質，適合大型商務展覽及公司尾牙。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 側欄 -->
+            <div class="col-md-4 d-none d-md-block">
+                <div class="sticky-md-top" style="top: 120px; z-index: 1;">
+                    <ul class="rounded bg-light p-4 mb-0">
+                        <li>
+                            <h3><span class="fw-bold" style="font-family: Kalam;">VeganFood</span> 用餐環境分類:</h3>
+                        </li>
+                        <li class="mb-2">
+                            <p> 一樓大廳區域: 適合情侶及朋友聚餐。</p>
+                        </li>
+                        <li  class="mb-2">
+                            <p>一樓落地窗區:  適合上班族辦公及用餐。</p>
+                        </li >
+                        <li  class="mb-2">
+                            <p> 二樓景觀包廂區:  適合家庭聚餐及商務會議。</p>
+                        </li>
+                        <li  class="mb-2">
+                            <p>頂樓戶外景觀區A:  適合新人婚宴場地，必須提前預訂。</p>
+                        </li>
+                        <li  class="mb-2">
+                            <p>頂樓戶外景觀區B: 適合大型商務展覽及公司尾牙</p>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-lg me-4" href="productLists.html">立即點餐</a>
+                        </li>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+
+
+
+    <footer class="footer pt-5 " style="background-color: #37474f;">
+      <div class="container text-white">
+        <div class="row   border-bottom">
+          <div class="col-md-4 mb-5 mb-md-0">
+            <a class="fw-bold fs-2 text-center mb-2 text-primary" href="./index.html"
+              style="font-family: Kalam;">VeganFood</a>
+            <ul class="mb-0 py-2" style="list-style:inside">
+              <li class="mb-2">環保永續</li>
+              <li class="mb-2">嚴選食材</li>
+              <li>優質服務</li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h5 class="border-bottom pb-2">餐廳資訊</h5>
+            <ul>
+              <li>
+                <a class="custom-nav-link p-2 "
+                  href="./about.html"><i class="bi bi-people-fill me-2 text-primary"></i>經營理念</a>
+              </li>
+              <li>
+                <a class="custom-nav-link p-2 "
+                  href="./productLists.html"><i class="bi bi-card-list me-2 text-primary"></i>菜單介紹</a>
+              </li>
+              <li>
+                <a class="custom-nav-link p-2  active"
+                  href="./foodSpace.html"><i class="bi bi-house-door-fill me-2 text-primary"></i>餐飲空間</a>
+              </li>
+              <li>
+                <a class="custom-nav-link p-2 " href="./qa.html"><i
+                    class="bi bi-question-octagon-fill me-2 text-primary"></i>常見問題</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-md-4">
+            <h5 class="border-bottom pb-2">客服中心</h5>
+            <ul>
+              <li>
+                <p class="custom-nav-link p-2"><i class="bi bi-house-fill me-2 text-primary"></i> 餐廳地址：台北市內湖區大湖捷運站</p>
+              </li>
+              <li>
+                <a href="tel:+886-2-2227336" class=" custom-nav-link p-2">
+                  <i class="bi bi-telephone-fill me-2 text-primary"></i>客服專線: (02)2227336
+                </a>
+              </li>
+              <li>
+                <p class="p-2  custom-nav-link"><i class="bi bi-clock-fill me-2 text-primary"></i>服務時間：週一至週日
+                  <span>08:00 ~ 19:00，不定時公休</span>
+                </p>
+              </li>
+              <li>
+                <a class=" custom-nav-link p-2" href="mailto:xxxd@hexschool.com"><i
+                    class="bi bi-envelope-fill  me-2 text-primary"></i>客服信箱:xxxd@hexschool.com</a>
+              </li>
+              <li>
+                <p class="p-2  custom-nav-link">
+                  <i class="bi bi-chat-dots-fill me-2 text-primary"></i>社群媒體:
+                  <a class="link-success me-2" href="#"><i class="bi bi-line fs-4 custom-icon-middle"></i></a>
+                  <a class="link-info me-2" href="#"><i class="bi bi-meta fs-4 custom-icon-middle"></i></a>
+                  <a class="link-secondary me-2" href="#"><i class="bi bi-github fs-4 custom-icon-middle"></i></a>
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="py-2 text-center ">
+        <p class="text-white">Copyright © 2021 VeganFood.All rights reserved. <br>作業練習使用，無商業用途</p>
+      </div>
+    </footer>
+
+
+    <!-- 元件 ejs -->
+    <!-- offcanvas  -->
+<div class="offcanvas offcanvas-end custom-offcanvas" tabindex="-1" id="cart-offcanvas"
+  aria-labelledby="cart-offcanvas">
+  <div class="offcanvas-header custom-offcanvas-header text-white" style="background-color: #37474f;">
+    <h5 class="offcanvas-title" id="cart-offcanvas">已選購餐點</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body custom-offcanvas-body">
+    <ul class="py-4 mb-0" id="cartList">
+    </ul>
+  </div>
+  <div class="p-3" id="account">
+    <p class="text-end fs-5  fw-bold mb-3">總金額: NT$<span id="totalPrice"> </span>元</p>
+    <div class="cartBtn-group d-flex justify-content-between">
+      <a href="./productLists.html" class="btn btn-primary w-50 me-2">繼續選購</a>
+      <a href="./cart.html" class="btn btn-success  w-50">前往結帳</a>
+    </div>
+
+  </div>
+</div>
+      <!--loading  -->
+<div class="loading" style="display: none;">
+    <div class="loading-mask"></div>
+    <div class="loading-img">
+      <div class="loadingio-spinner-ripple-ett975kzlg6">
+        <div class="ldio-fhsto9ag0lp">
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+        <script src="./assets/js/vendors.js"></script>
+        <script src="./assets/js/all.js"></script>
+</body>
+
+</html>
