@@ -9,7 +9,7 @@ let productsData = [];
 // 購物車 data
 let cartData = [];
 // 我的最愛 Data 
-let favoriteData = [];
+let favoriteData = JSON.parse(localStorage.getItem("favoriteItem")) || [];
 
 
 // DOM 元素管理
@@ -46,32 +46,38 @@ function getAllProducts() {
             productsData = response.data.products;
 
             //資料回傳後， 關閉loading
-            setTimeout(() => {toggleLoading(false);}, 600);
-    
+            setTimeout(() => { toggleLoading(false); }, 600);
+
             // 確認有 productsList DOM 才執行
             if (productsList !== null) {
                 //資料回傳後渲染畫面
                 renderProductsList(productsData);
                 //資料回傳 寫入分頁函式
                 renderPages(productsData, 1);
+                // 渲染愛心按鈕
+                renderAddBtn();
             };
 
             // 確認有 popularProductList DOM 才執行
             if (popularProductList !== null) {
                 // 呈現 熱銷餐點列表
                 renderPopularProduct(productsData);
+                // 渲染愛心按鈕
+                renderAddBtn();
             };
 
             // 確認有 selectProductsList DOM 才執行 
             if (selectProductsList !== null) {
                 // 呈現 主廚推薦餐點列表
                 renderSelectProducts(productsData);
+                // 渲染愛心按鈕
+                renderAddBtn();
             };
         })
 
-        .catch(function (error) {
-            console.log(error.response.data);
-        })
+        // .catch(function (error) {
+        //     console.log(error.response.data);
+        // })
 };
 
 
@@ -154,7 +160,7 @@ function renderCartList(arr) {
     cartNum.textContent = arr.length;
 
     // 呈現總金額
-    totalPrice.textContent =  tothousands(finalTotal);
+    totalPrice.textContent = tothousands(finalTotal);
 
     // 呈現購物車產品列表
     cartList.innerHTML = str;
@@ -200,30 +206,34 @@ function deleteCartItem(cartId) {
 
 
 // 我的最愛 - 將產品加入我的最愛
-function addFavoriteItem(heartIcon, productId) {
-    productsData.forEach((productsItem) => {
-        if (productsItem.id === productId) {
-            // 製作 愛心切換功能
-            if (heartIcon.classList.contains("bi-heart")) {
-                swalFn("已加入收藏", "success", 800);
-                // 新增一筆產品到我的最愛
-                favoriteData.push(productsItem)
-                heartIcon.classList.remove("bi-heart");
-                heartIcon.classList.add("bi-heart-fill");
-                console.log(heartIcon, productId);
-            } else {
-                swalFn("已移除收藏", "warning", 800);
-                favoriteData = favoriteData.filter((favoritesItem) => favoritesItem.id !== productId);
-                heartIcon.classList.remove("bi-heart-fill");
-                heartIcon.classList.add("bi-heart");
-                console.log(heartIcon, productId);
-            };
-        }
-    });
+function addFavorites(productItem, productId) {
+    // 先查找 favoriteData資料的 id 與 產品列表的 id 是一樣的，有的話就回傳 true
+    favoriteData.find((favorite) => favorite.id === productId);
 
-    // 取得我的最愛資訊
-    getFavoriteList(favoriteData);
+    // 要避免重複加入，所以用some功能比對是否有重複id
+    if (favoriteData.some((favorite) => favorite.id === productId)) {
+        return swalFn("重複加入", "danger", 800);
+    };
+
+    favoriteData.push(productItem);
+    swalFn("已加入最愛", "success", 800);
 };
+
+// 我的最愛 - 切換愛心按鈕
+function toggleAddFavorite(id) {
+    const addFaBtn = document.querySelector(`#addFavorite i[data-favorite-id=${id}]`);
+
+    addFaBtn.classList.toggle("bi-heart");
+    addFaBtn.classList.toggle("bi-heart-fill");
+};
+
+// 我的最愛 - 渲染切換愛心按鈕
+function renderAddBtn() {
+    if (favoriteData === null) return;
+    favoriteData.forEach((favorite) => toggleAddFavorite(favorite.id));
+    console.log(favoriteData);
+}
+
 
 // 我的最愛 - 取得收藏產品列表 
 function getFavoriteList() {
@@ -293,32 +303,41 @@ const favoriteTable = document.querySelector("#favoriteTable");
 favoriteTable.addEventListener("click", function (e) {
     e.preventDefault();
 
+    const favoriteId = e.target.closest("#favoriteList tr").dataset.favoriteId;
+
     // 單筆刪除
     if (e.target.getAttribute("id") === "delFavoriteBtn") {
-
-        const favoriteId = e.target.closest("#favoriteList tr").dataset.favoriteId;
-        
-        favoriteData = favoriteData.filter((favoritesItem) => favoritesItem.id !== favoriteId);
-        swalFn("已移除收藏", "success", 800);
-        // 移除 愛心icon 的狀態
-        heartIcon.classList.remove("bi-heart-fill");
-        heartIcon.classList.add("bi-heart");
-        // 重新取得我的最愛資訊
-        getFavoriteList();
+        delFavorite(favoriteId)
+        toggleAddFavorite(favoriteId);
     };
 
     // 刪除全部
     if (e.target.getAttribute("id") === "delAllFavoriteBtn") {
         favoriteData = [];
         swalFn("已移除所有收藏", "success", 800);
-
-        // 重新取得我的最愛資訊
-        getFavoriteList();
-        // 重新取得產品列表
-        getAllProducts();
+        toggleAddFavorite(favoriteId);
     };
 
+
+    // 將資料寫入 localStorage
+    localStorage.setItem("favoriteItem", JSON.stringify(favoriteData));
+    getFavoriteList();
 });
 
 
+//我的最愛 - 移除單筆最愛
+function delFavorite(id) {
+
+    if (!favoriteData) { return };
+
+    // 取得我的最愛列表內的 單一品項 id
+    const delFavoriteIndex = favoriteData.findIndex(
+        (favorite) => favorite.id === id
+    );
+
+    if (delFavoriteIndex === -1) return;
+    favoriteData.splice(delFavoriteIndex, 1);
+
+    swalFn("已移除收藏", "warning", 800);
+}
 
