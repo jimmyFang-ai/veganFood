@@ -9,9 +9,9 @@ const btnGroup = document.querySelector("#btn-group");
 // 商品資訊 - 渲染產品列表
 function renderProductsList(arr) {
   let str = "";
-  arr.forEach((item) => {
+  arr.forEach((productsItem) => {
     str += `<div class="col mb-4">
-      <a data-id=${item.id} href="./productInner.html?id=${item.id}" class="text-dark" id="productInnerUrl">
+      <a data-id=${productsItem.id} href="./productInner.html?id=${productsItem.id}" class="text-dark" id="productInnerUrl">
         <div class="card custom-card  shadow-sm">
         
         <button type="button" class="btn  position-absolute   shadow-none  border-0  fs-5 favoriteBtn" id="addFavorite" style="z-index: 1;">
@@ -19,12 +19,12 @@ function renderProductsList(arr) {
        </button>
 
           <div class="card-img-wrap">
-            <img src="${item.imageUrl}" class="card-img-top" alt="${item.title}">
+            <img src="${productsItem.imageUrl}" class="card-img-top" alt="${productsItem.title}">
             <p class="card-img-text mb-0  fs-5">看詳細</p>
           </div>
           <div class="card-body">
-            <h5>${item.title}</h5>
-            <p class="mb-3">售價: <span>NT$ ${tothousands(item.origin_price)}</span></p>
+            <h5>${productsItem.title}</h5>
+            <p class="mb-3">售價: <span>NT$ ${tothousands(productsItem.origin_price)}</span></p>
             <button type="button" class="btn btn-outline-success shadow-none   w-100 d-flex justify-content-center align-items-center" id="addCart">
             <i class="bi bi-cart-plus fs-5  me-2"></i>
             加入購物車
@@ -58,8 +58,8 @@ function changeTab(e) {
     const allbtns = document.querySelectorAll("#btn-group a");
 
     // allTabs 回傳類陣列跑foreach 先將 active 全部移除 再加上去
-    allbtns.forEach((item) => {
-      item.classList.remove("active");
+    allbtns.forEach((btn) => {
+      btn.classList.remove("active");
     });
 
     //點擊到對應的 按鈕 再增加 active 樣式
@@ -83,7 +83,7 @@ function updateProductsList() {
     filtersData = productsData;
     productsCategory.textContent = "全部商品";
   } else {
-    filtersData = productsData.filter(item => item.category === toggleCategory);
+    filtersData = productsData.filter(productsItem => productsItem.category === toggleCategory);
     productsCategory.textContent = toggleCategory;
   };
 

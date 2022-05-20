@@ -80,31 +80,31 @@ function renderOrderProdcuts(arr) {
     // 取的總金額 DOM 元素
     const orderTotalPrice = document.querySelector("#orderTotalPrice");
 
-    arr.forEach((item) => {
+    arr.forEach((orderItem) => {
         str += `<li class="card  mb-3 shadow-sm">
         <div class="row align-items-center g-0">
             <div class="col">
                 <div class="ratio ratio-4x3">
-                    <img src="${item.product.imageUrl}" class="img-fluid  rounded-start"
-                        alt="${item.product.title}">
+                    <img src="${orderItem.product.imageUrl}" class="img-fluid  rounded-start"
+                        alt="${orderItem.product.title}">
                 </div>
             </div>
             <div class="col">
                 <div class="card-body">
-                    <h5 class="card-title">${item.product.title}</h5>
-                    <p class="card-text mb-2">數量:${item.qty} </p>
-                    <p class="card-text">總價: <span>NT$ ${item.qty * item.product.origin_price} </span></p>
+                    <h5 class="card-title">${orderItem.product.title}</h5>
+                    <p class="card-text mb-2">數量:${orderItem.qty} </p>
+                    <p class="card-text">總價: <span>NT$ ${tothousands(orderItem.qty * orderItem.product.origin_price)} </span></p>
                 </div>
             </div>
         </div>
     </li>`;
 
         // 計算總金額
-        finalTotal += item.qty * item.product.origin_price;
+        finalTotal += orderItem.qty * orderItem.product.origin_price;
     })
 
     // 呈現在付款頁面
-    orderTotalPrice.textContent = finalTotal;
+    orderTotalPrice.textContent = tothousands(finalTotal);
     orderProdcuts.innerHTML = str;
 }
 

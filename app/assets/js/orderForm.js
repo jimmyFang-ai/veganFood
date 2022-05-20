@@ -76,7 +76,6 @@ if (submitFormBtn !== null) {
         };
 
 
-
         // 針對每個input 綁定 change 事件監聽驗證，逐一改變錯誤訊息狀態
         inputs.forEach((item) => {
             item.addEventListener("change", function (e) {

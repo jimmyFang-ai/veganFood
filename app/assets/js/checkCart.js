@@ -28,34 +28,34 @@ function renderCheckCartList(arr) {
 
         cartAccout.classList.add("d-none");
     } else {
-        arr.forEach((item, index) => {
-            str += `<tr data-cart-id=${item.id}>
+        arr.forEach((cartItem, index) => {
+            str += `<tr data-cart-id=${cartItem.id}>
             <td>
 
             <div class="row gx-0 align-items-center">
             <div class="col-6 d-none d-md-block">
-                <img class="img-fluid" src="${item.product.imageUrl}" alt="巴西莓果碗">
+                <img class="img-fluid" src="${cartItem.product.imageUrl}" alt="巴西莓果碗">
             </div>
             <div class="col col-md-6">
-                <p class="mb-2">${item.product.title}</p>
-                <span>NT$ ${item.product.origin_price}</span>
+                <p class="mb-2">${cartItem.product.title}</p>
+                <span>NT$ ${cartItem.product.origin_price}</span>
             </div>
         </div>
             </td>
             <td>
             <div class="d-flex justify-content-center">
             <div class="input-group text-center" style="max-width: 160px;">
-                <button type="button" class="btn text-success fs-4 shadow-none px-1 px-md-3" id="minusNumBtn" data-product-num="${index}"  data-product-id="${item.product_id}">
+                <button type="button" class="btn text-success fs-4 shadow-none px-1 px-md-3" id="minusNumBtn" data-product-num="${index}"  data-product-id="${cartItem.product_id}">
                     -
                 </button>
-                <input type="number" class="form-control text-center w-25 px-1 px-md-2 " id="productNumInput"  data-product-num="${index}"   value="${item.qty}" min="1" >
-                    <button type="button" class="btn text-success fs-4  shadow-none px-1 px-md-3" id="plusNumBtn"data-product-num="${index}"  data-product-id="${item.product_id}"> 
+                <input type="number" class="form-control text-center w-25 px-1 px-md-2 " id="productNumInput"  data-product-num="${index}"   value="${cartItem.qty}" min="1" >
+                    <button type="button" class="btn text-success fs-4  shadow-none px-1 px-md-3" id="plusNumBtn"data-product-num="${index}"  data-product-id="${cartItem.product_id}"> 
                       +
                     </button>
             </div>
         </div>
             </td>
-            <td>NT$ ${tothousands(item.product.origin_price * item.qty)}</td>
+            <td>NT$ ${tothousands(cartItem.product.origin_price * cartItem.qty)}</td>
             <td>
                 <button type="button" class="btn  shadow-none  border-0 p-0" id="delCartBtn">
                     <i class="bi bi-trash-fill text-danger custom-icon-middle"></i>
@@ -64,7 +64,7 @@ function renderCheckCartList(arr) {
             </tr>`;
 
             //  計算總金額
-            finalTotal += item.product.origin_price * item.qty;
+            finalTotal += cartItem.product.origin_price * cartItem.qty;
 
 
         });
@@ -99,7 +99,6 @@ if (checkCartList !== null) {
         // 單筆刪除
         if (e.target.getAttribute("id") === "delCartBtn") {
             e.preventDefault();
-            swalFn("已刪除單筆餐點", "success", 800);
             deleteCartItem(cartId);
         };
 

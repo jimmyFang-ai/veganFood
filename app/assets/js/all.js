@@ -35,11 +35,9 @@ function init() {
 init();
 
 
-  
-
-
 // 商品資訊 - 取得所有產品
 function getAllProducts() {
+
     //等待資料回傳前， 載入loading
     toggleLoading(true);
 
@@ -69,8 +67,6 @@ function getAllProducts() {
                 // 呈現 主廚推薦餐點列表
                 renderSelectProducts(productsData);
             };
-
-
         })
 
         .catch(function (error) {
@@ -127,20 +123,20 @@ function renderCartList(arr) {
         // 結帳畫面消失
         account.classList.add("d-none");
     } else {
-        arr.forEach((item) => {
+        arr.forEach((cartItem) => {
             //  計算總金額totalPrice.textContent = 
-            finalTotal += item.product.origin_price * item.qty;
+            finalTotal += cartItem.product.origin_price * cartItem.qty;
 
-            str += `<li class="row  text-center gx-0  align-items-center mb-3" data-cart-id=${item.id}>
+            str += `<li class="row  text-center gx-0  align-items-center mb-3" data-cart-id=${cartItem.id}>
        <div class="col-4">
-         <img class="img-fluid" src="${item.product.imageUrl}" alt="${item.product.title}">
+         <img class="img-fluid" src="${cartItem.product.imageUrl}" alt="${cartItem.product.title}">
        </div>
        <div class="col-4">
-         <p>${item.product.title}</p>
-          <small class="text-muted"> x ${item.qty}</small>
+         <p>${cartItem.product.title}</p>
+          <small class="text-muted"> x ${cartItem.qty}</small>
        </div>
        <div class="col-3">
-          <small class="text-muted"> NT$ ${tothousands(item.product.origin_price * item.qty)}</small>
+          <small class="text-muted"> NT$ ${tothousands(cartItem.product.origin_price * cartItem.qty)}</small>
        </div>
        <div class="col-1 px-0 mb-0">
          <button type="button" class="btn  shadow-none  border-0 p-0" id="delCartBtn">
@@ -187,7 +183,6 @@ cartList.addEventListener("click", function (e) {
     const cartId = e.target.closest("li").dataset.cartId;
 
     if (e.target.getAttribute("id") === "delCartBtn") {
-        swalFn("已刪除單筆餐點", "success", 800);
         deleteCartItem(cartId);
     }
 });
@@ -196,6 +191,7 @@ function deleteCartItem(cartId) {
     axios.delete(`${apiUrl}api/${apiPath}/cart/${cartId}`)
         .then(function (reponse) {
             getCartList();
+            swalFn("已刪除單筆餐點", "success", 800);
         })
         .catch(function (error) {
             console.log(error.data);
@@ -205,19 +201,19 @@ function deleteCartItem(cartId) {
 
 // 我的最愛 - 將產品加入我的最愛
 function addFavoriteItem(heartIcon, productId) {
-    productsData.forEach((item) => {
-        if (item.id === productId) {
+    productsData.forEach((productsItem) => {
+        if (productsItem.id === productId) {
             // 製作 愛心切換功能
             if (heartIcon.classList.contains("bi-heart")) {
                 swalFn("已加入收藏", "success", 800);
                 // 新增一筆產品到我的最愛
-                favoriteData.push(item)
+                favoriteData.push(productsItem)
                 heartIcon.classList.remove("bi-heart");
                 heartIcon.classList.add("bi-heart-fill");
                 console.log(heartIcon, productId);
             } else {
                 swalFn("已移除收藏", "warning", 800);
-                favoriteData = favoriteData.filter((item) => item.id !== productId);
+                favoriteData = favoriteData.filter((favoritesItem) => favoritesItem.id !== productId);
                 heartIcon.classList.remove("bi-heart-fill");
                 heartIcon.classList.add("bi-heart");
                 console.log(heartIcon, productId);
@@ -268,12 +264,12 @@ function renderFavoriteList(arr) {
 
         delAllFavoriteBtn.setAttribute("disabled", "");
     } else {
-        arr.forEach((item) => {
-            str += `<tr data-favorite-id=${item.id}>
+        arr.forEach((favoritesItem) => {
+            str += `<tr data-favorite-id=${favoritesItem.id}>
       <td>
-        <img class="img-fluid" src="${item.imageUrl}" alt="${item.title}">
+        <img class="img-fluid" src="${favoritesItem.imageUrl}" alt="${favoritesItem.title}">
       </td>
-      <td>${item.title}</td>
+      <td>${favoritesItem.title}</td>
       <td>
         <button type="button" class="btn  shadow-none  border-0 p-0" id="delFavoriteBtn">
           <i class="bi bi-trash-fill text-danger custom-icon-middle"></i>
@@ -302,7 +298,7 @@ favoriteTable.addEventListener("click", function (e) {
 
         const favoriteId = e.target.closest("#favoriteList tr").dataset.favoriteId;
         
-        favoriteData = favoriteData.filter((item) => item.id !== favoriteId);
+        favoriteData = favoriteData.filter((favoritesItem) => favoritesItem.id !== favoriteId);
         swalFn("已移除收藏", "success", 800);
         // 移除 愛心icon 的狀態
         heartIcon.classList.remove("bi-heart-fill");
