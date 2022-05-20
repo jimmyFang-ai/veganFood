@@ -9,7 +9,7 @@ var productsData = []; // 購物車 data
 
 var cartData = []; // 我的最愛 Data 
 
-var favoriteData = []; // DOM 元素管理
+var favoriteData = JSON.parse(localStorage.getItem("favoriteItem")) || []; // DOM 元素管理
 // const productsList = document.querySelector("#productsList");
 
 var cartList = document.querySelector("#cartList");
@@ -50,27 +50,33 @@ function getAllProducts() {
       //資料回傳後渲染畫面
       renderProductsList(productsData); //資料回傳 寫入分頁函式
 
-      renderPages(productsData, 1);
+      renderPages(productsData, 1); // 渲染愛心按鈕
+
+      renderAddBtn();
     }
 
     ; // 確認有 popularProductList DOM 才執行
 
     if (popularProductList !== null) {
       // 呈現 熱銷餐點列表
-      renderPopularProduct(productsData);
+      renderPopularProduct(productsData); // 渲染愛心按鈕
+
+      renderAddBtn();
     }
 
     ; // 確認有 selectProductsList DOM 才執行 
 
     if (selectProductsList !== null) {
       // 呈現 主廚推薦餐點列表
-      renderSelectProducts(productsData);
+      renderSelectProducts(productsData); // 渲染愛心按鈕
+
+      renderAddBtn();
     }
 
     ;
-  })["catch"](function (error) {
-    console.log(error.response.data);
-  });
+  }); // .catch(function (error) {
+  //     console.log(error.response.data);
+  // })
 }
 
 ; //  購物車 - 取得購物車資訊
@@ -164,35 +170,41 @@ function deleteCartItem(cartId) {
 
 ; // 我的最愛 - 將產品加入我的最愛
 
-function addFavoriteItem(heartIcon, productId) {
-  productsData.forEach(function (productsItem) {
-    if (productsItem.id === productId) {
-      // 製作 愛心切換功能
-      if (heartIcon.classList.contains("bi-heart")) {
-        swalFn("已加入收藏", "success", 800); // 新增一筆產品到我的最愛
+function addFavorites(productItem, productId) {
+  // 先查找 favoriteData資料的 id 與 產品列表的 id 是一樣的，有的話就回傳 true
+  favoriteData.find(function (favorite) {
+    return favorite.id === productId;
+  }); // 要避免重複加入，所以用some功能比對是否有重複id
 
-        favoriteData.push(productsItem);
-        heartIcon.classList.remove("bi-heart");
-        heartIcon.classList.add("bi-heart-fill");
-        console.log(heartIcon, productId);
-      } else {
-        swalFn("已移除收藏", "warning", 800);
-        favoriteData = favoriteData.filter(function (favoritesItem) {
-          return favoritesItem.id !== productId;
-        });
-        heartIcon.classList.remove("bi-heart-fill");
-        heartIcon.classList.add("bi-heart");
-        console.log(heartIcon, productId);
-      }
+  if (favoriteData.some(function (favorite) {
+    return favorite.id === productId;
+  })) {
+    return swalFn("重複加入", "danger", 800);
+  }
 
-      ;
-    }
-  }); // 取得我的最愛資訊
-
-  getFavoriteList(favoriteData);
+  ;
+  favoriteData.push(productItem);
+  swalFn("已加入最愛", "success", 800);
 }
 
-; // 我的最愛 - 取得收藏產品列表 
+; // 我的最愛 - 切換愛心按鈕
+
+function toggleAddFavorite(id) {
+  var addFaBtn = document.querySelector("#addFavorite i[data-favorite-id=".concat(id, "]"));
+  addFaBtn.classList.toggle("bi-heart");
+  addFaBtn.classList.toggle("bi-heart-fill");
+}
+
+; // 我的最愛 - 渲染切換愛心按鈕
+
+function renderAddBtn() {
+  if (favoriteData === null) return;
+  favoriteData.forEach(function (favorite) {
+    return toggleAddFavorite(favorite.id);
+  });
+  console.log(favoriteData);
+} // 我的最愛 - 取得收藏產品列表 
+
 
 function getFavoriteList() {
   // 確認 產品列表DOM才執行
@@ -246,34 +258,42 @@ function renderFavoriteList(arr) {
 
 var favoriteTable = document.querySelector("#favoriteTable");
 favoriteTable.addEventListener("click", function (e) {
-  e.preventDefault(); // 單筆刪除
+  e.preventDefault();
+  var favoriteId = e.target.closest("#favoriteList tr").dataset.favoriteId; // 單筆刪除
 
   if (e.target.getAttribute("id") === "delFavoriteBtn") {
-    var favoriteId = e.target.closest("#favoriteList tr").dataset.favoriteId;
-    favoriteData = favoriteData.filter(function (favoritesItem) {
-      return favoritesItem.id !== favoriteId;
-    });
-    swalFn("已移除收藏", "success", 800); // 移除 愛心icon 的狀態
-
-    heartIcon.classList.remove("bi-heart-fill");
-    heartIcon.classList.add("bi-heart"); // 重新取得我的最愛資訊
-
-    getFavoriteList();
+    delFavorite(favoriteId);
+    toggleAddFavorite(favoriteId);
   }
 
   ; // 刪除全部
 
   if (e.target.getAttribute("id") === "delAllFavoriteBtn") {
     favoriteData = [];
-    swalFn("已移除所有收藏", "success", 800); // 重新取得我的最愛資訊
-
-    getFavoriteList(); // 重新取得產品列表
-
-    getAllProducts();
+    swalFn("已移除所有收藏", "success", 800);
+    toggleAddFavorite(favoriteId);
   }
 
-  ;
-});
+  ; // 將資料寫入 localStorage
+
+  localStorage.setItem("favoriteItem", JSON.stringify(favoriteData));
+  getFavoriteList();
+}); //我的最愛 - 移除單筆最愛
+
+function delFavorite(id) {
+  if (!favoriteData) {
+    return;
+  }
+
+  ; // 取得我的最愛列表內的 單一品項 id
+
+  var delFavoriteIndex = favoriteData.findIndex(function (favorite) {
+    return favorite.id === id;
+  });
+  if (delFavoriteIndex === -1) return;
+  favoriteData.splice(delFavoriteIndex, 1);
+  swalFn("已移除收藏", "warning", 800);
+}
 "use strict";
 
 var checkCartList = document.querySelector("#checkCartList"); // 確認購物車 - 渲染購物車列表
@@ -409,16 +429,13 @@ function renderSelectProducts(arr) {
   var str = "";
   arr.forEach(function (productsItem) {
     if (productsItem.category === "主餐") {
-      str += "<div class=\"col mb-4\">\n            <a data-id=".concat(productsItem.id, " href=\"./productInner.html?id=").concat(productsItem.id, "\" class=\"text-dark\" id=\"productInnerUrl\">\n              <div class=\"card custom-card  shadow-sm\">\n              \n              <button type=\"button\" class=\"btn  position-absolute   shadow-none  border-0  fs-5 favoriteBtn\" id=\"addFavorite\" style=\"z-index: 1;\">\n                  <i class=\"bi bi-heart custom-icon-heart text-danger py-0\" ></i>\n             </button>\n      \n                <div class=\"card-img-wrap\">\n                  <img src=\"").concat(productsItem.imageUrl, "\" class=\"card-img-top\" alt=\"").concat(productsItem.title, "\">\n                  <p class=\"card-img-text mb-0  fs-5\">\u770B\u8A73\u7D30</p>\n                </div>\n                <div class=\"card-body\">\n                  <h5>").concat(productsItem.title, "</h5>\n                  <p class=\"mb-3\">\u552E\u50F9: <span>NT$ ").concat(tothousands(productsItem.origin_price), "</span></p>\n                  <button type=\"button\" class=\"btn btn-outline-success shadow-none   w-100 d-flex justify-content-center align-items-center\" id=\"addCart\">\n                  <i class=\"bi bi-cart-plus fs-5  me-2\"></i>\n                  \u52A0\u5165\u8CFC\u7269\u8ECA\n                  </button>\n                </div>\n              </div>\n            </a>\n            </div>");
+      str += "<div class=\"col mb-4\">\n            <a data-id=".concat(productsItem.id, " href=\"./productInner.html?id=").concat(productsItem.id, "\" class=\"text-dark\" id=\"productInnerUrl\">\n              <div class=\"card custom-card  shadow-sm\">\n              \n              <button type=\"button\" class=\"btn  position-absolute   shadow-none  border-0  fs-5 favoriteBtn\" id=\"addFavorite\" style=\"z-index: 1;\">\n                  <i class=\"bi bi-heart custom-icon-heart text-danger py-0\" data-favorite-id=").concat(productsItem.id, "></i>\n             </button>\n      \n                <div class=\"card-img-wrap\">\n                  <img src=\"").concat(productsItem.imageUrl, "\" class=\"card-img-top\" alt=\"").concat(productsItem.title, "\">\n                  <p class=\"card-img-text mb-0  fs-5\">\u770B\u8A73\u7D30</p>\n                </div>\n                <div class=\"card-body\">\n                  <h5>").concat(productsItem.title, "</h5>\n                  <p class=\"mb-3\">\u552E\u50F9: <span>NT$ ").concat(tothousands(productsItem.origin_price), "</span></p>\n                  <button type=\"button\" class=\"btn btn-outline-success shadow-none   w-100 d-flex justify-content-center align-items-center\" id=\"addCart\">\n                  <i class=\"bi bi-cart-plus fs-5  me-2\"></i>\n                  \u52A0\u5165\u8CFC\u7269\u8ECA\n                  </button>\n                </div>\n              </div>\n            </a>\n            </div>");
     }
   });
   selectProductsList.innerHTML = str;
 }
 
 ; // 主廚推薦餐點 - 新增購物車 及 新增最愛功能
-// 初始化 愛心icon
-
-var heartIcon = "";
 
 if (selectProductsList !== null) {
   selectProductsList.addEventListener("click", function (e) {
@@ -435,10 +452,30 @@ if (selectProductsList !== null) {
       ; // 加入我的最愛
 
       if (e.target.getAttribute("id") === "addFavorite") {
-        e.preventDefault(); // 取得 愛心icon DOM 元素
+        e.preventDefault(); // 產品列表跑 forEach 將 id 取出來與 productId 比對，符合的話加入我的最愛
 
-        heartIcon = e.target.firstElementChild;
-        addFavoriteItem(heartIcon, productId);
+        productsData.forEach(function (productItem) {
+          if (productItem.id !== productId) {
+            return;
+          } // 切換愛心樣式
+          // 點擊到加入我的最愛時，沒有實心愛心就加上並新增一筆資料到favoriteData
+
+
+          if (e.target.children[0].classList.contains("bi-heart")) {
+            // 加入我的愛心
+            addFavorites(productItem, productId);
+            toggleAddFavorite(productId);
+          } else {
+            // 有實心愛心就從 favoriteData移除一筆資料
+            delFavorite(productId);
+            toggleAddFavorite(productId);
+          }
+
+          ; // 將資料寫入 localStorage
+
+          localStorage.setItem("favoriteItem", JSON.stringify(favoriteData));
+          getFavoriteList();
+        });
       }
 
       ;
@@ -748,16 +785,13 @@ function renderPopularProduct(arr) {
   var str = "";
   arr.forEach(function (productsItem) {
     if (productsItem.category === "飲品") {
-      str += "<div class=\"col mb-4\">\n            <a data-id=".concat(productsItem.id, " href=\"./productInner.html?id=").concat(productsItem.id, "\" class=\"text-dark\" id=\"productInnerUrl\">\n              <div class=\"card custom-card  shadow-sm\">\n              \n              <button type=\"button\" class=\"btn  position-absolute   shadow-none  border-0  fs-5 favoriteBtn\" id=\"addFavorite\" style=\"z-index: 1;\">\n                  <i class=\"bi bi-heart custom-icon-heart text-danger py-0\" ></i>\n             </button>\n      \n                <div class=\"card-img-wrap\">\n                  <img src=\"").concat(productsItem.imageUrl, "\" class=\"card-img-top\" alt=\"").concat(productsItem.title, "\">\n                  <p class=\"card-img-text mb-0  fs-5\">\u770B\u8A73\u7D30</p>\n                </div>\n                <div class=\"card-body\">\n                  <h5>").concat(productsItem.title, "</h5>\n                  <p class=\"mb-3\">\u552E\u50F9: <span>NT$ ").concat(tothousands(productsItem.origin_price), "</span></p>\n                  <button type=\"button\" class=\"btn btn-outline-success shadow-none   w-100 d-flex justify-content-center align-items-center\" id=\"addCart\">\n                  <i class=\"bi bi-cart-plus fs-5  me-2\"></i>\n                  \u52A0\u5165\u8CFC\u7269\u8ECA\n                  </button>\n                </div>\n              </div>\n            </a>\n            </div>");
+      str += "<div class=\"col mb-4\">\n            <a data-id=".concat(productsItem.id, " href=\"./productInner.html?id=").concat(productsItem.id, "\" class=\"text-dark\" id=\"productInnerUrl\">\n              <div class=\"card custom-card  shadow-sm\">\n              \n              <button type=\"button\" class=\"btn  position-absolute   shadow-none  border-0  fs-5 favoriteBtn\" id=\"addFavorite\" style=\"z-index: 1;\">\n                  <i class=\"bi bi-heart custom-icon-heart text-danger py-0\"  data-favorite-id=").concat(productsItem.id, "></i>\n             </button>\n      \n                <div class=\"card-img-wrap\">\n                  <img src=\"").concat(productsItem.imageUrl, "\" class=\"card-img-top\" alt=\"").concat(productsItem.title, "\">\n                  <p class=\"card-img-text mb-0  fs-5\">\u770B\u8A73\u7D30</p>\n                </div>\n                <div class=\"card-body\">\n                  <h5>").concat(productsItem.title, "</h5>\n                  <p class=\"mb-3\">\u552E\u50F9: <span>NT$ ").concat(tothousands(productsItem.origin_price), "</span></p>\n                  <button type=\"button\" class=\"btn btn-outline-success shadow-none   w-100 d-flex justify-content-center align-items-center\" id=\"addCart\">\n                  <i class=\"bi bi-cart-plus fs-5  me-2\"></i>\n                  \u52A0\u5165\u8CFC\u7269\u8ECA\n                  </button>\n                </div>\n              </div>\n            </a>\n            </div>");
     }
   });
   popularProductList.innerHTML = str;
 }
 
 ; //熱銷餐點 - 新增購物車 及 新增最愛功能
-// 初始化 愛心icon
-
-var heartIcon = "";
 
 if (popularProductList !== null) {
   popularProductList.addEventListener("click", function (e) {
@@ -775,10 +809,30 @@ if (popularProductList !== null) {
       ; // 加入我的最愛
 
       if (e.target.getAttribute("id") === "addFavorite") {
-        e.preventDefault(); // 取得 愛心icon DOM 元素
+        e.preventDefault(); // 產品列表跑 forEach 將 id 取出來與 productId 比對，符合的話加入我的最愛
 
-        heartIcon = e.target.firstElementChild;
-        addFavoriteItem(heartIcon, productId);
+        productsData.forEach(function (productItem) {
+          if (productItem.id !== productId) {
+            return;
+          } // 切換愛心樣式
+          // 點擊到加入我的最愛時，沒有實心愛心就加上並新增一筆資料到favoriteData
+
+
+          if (e.target.children[0].classList.contains("bi-heart")) {
+            // 加入我的愛心
+            addFavorites(productItem, productId);
+            toggleAddFavorite(productId);
+          } else {
+            // 有實心愛心就從 favoriteData移除一筆資料
+            delFavorite(productId);
+            toggleAddFavorite(productId);
+          }
+
+          ; // 將資料寫入 localStorage
+
+          localStorage.setItem("favoriteItem", JSON.stringify(favoriteData));
+          getFavoriteList();
+        });
       }
 
       ;
@@ -798,7 +852,7 @@ var btnGroup = document.querySelector("#btn-group"); // 商品資訊 - 渲染產
 function renderProductsList(arr) {
   var str = "";
   arr.forEach(function (productsItem) {
-    str += "<div class=\"col mb-4\">\n      <a data-id=".concat(productsItem.id, " href=\"./productInner.html?id=").concat(productsItem.id, "\" class=\"text-dark\" id=\"productInnerUrl\">\n        <div class=\"card custom-card  shadow-sm\">\n        \n        <button type=\"button\" class=\"btn  position-absolute   shadow-none  border-0  fs-5 favoriteBtn\" id=\"addFavorite\" style=\"z-index: 1;\">\n            <i class=\"bi bi-heart custom-icon-heart text-danger py-0\" ></i>\n       </button>\n\n          <div class=\"card-img-wrap\">\n            <img src=\"").concat(productsItem.imageUrl, "\" class=\"card-img-top\" alt=\"").concat(productsItem.title, "\">\n            <p class=\"card-img-text mb-0  fs-5\">\u770B\u8A73\u7D30</p>\n          </div>\n          <div class=\"card-body\">\n            <h5>").concat(productsItem.title, "</h5>\n            <p class=\"mb-3\">\u552E\u50F9: <span>NT$ ").concat(tothousands(productsItem.origin_price), "</span></p>\n            <button type=\"button\" class=\"btn btn-outline-success shadow-none   w-100 d-flex justify-content-center align-items-center\" id=\"addCart\">\n            <i class=\"bi bi-cart-plus fs-5  me-2\"></i>\n            \u52A0\u5165\u8CFC\u7269\u8ECA\n            </button>\n          </div>\n        </div>\n      </a>\n      </div>");
+    str += "<div class=\"col mb-4\">\n      <a data-id=".concat(productsItem.id, " href=\"./productInner.html?id=").concat(productsItem.id, "\" class=\"text-dark\" id=\"productInnerUrl\">\n        <div class=\"card custom-card  shadow-sm\">\n        \n        <button type=\"button\" class=\"btn  position-absolute   shadow-none  border-0  fs-5 favoriteBtn\" id=\"addFavorite\" style=\"z-index: 1;\">\n            <i class=\"bi bi-heart custom-icon-heart text-danger py-0\" data-favorite-id=").concat(productsItem.id, "></i>\n       </button>\n\n          <div class=\"card-img-wrap\">\n            <img src=\"").concat(productsItem.imageUrl, "\" class=\"card-img-top\" alt=\"").concat(productsItem.title, "\">\n            <p class=\"card-img-text mb-0  fs-5\">\u770B\u8A73\u7D30</p>\n          </div>\n          <div class=\"card-body\">\n            <h5>").concat(productsItem.title, "</h5>\n            <p class=\"mb-3\">\u552E\u50F9: <span>NT$ ").concat(tothousands(productsItem.origin_price), "</span></p>\n            <button type=\"button\" class=\"btn btn-outline-success shadow-none   w-100 d-flex justify-content-center align-items-center\" id=\"addCart\">\n            <i class=\"bi bi-cart-plus fs-5  me-2\"></i>\n            \u52A0\u5165\u8CFC\u7269\u8ECA\n            </button>\n          </div>\n        </div>\n      </a>\n      </div>");
   });
   productsList.innerHTML = str;
 }
@@ -861,9 +915,6 @@ function updateProductsList() {
 }
 
 ; // 新增功能整合 - 新增購物車 及 新增最愛功能
-// 初始化 愛心icon
-
-var heartIcon = "";
 
 if (productsList !== null) {
   // 在產品列表綁定監聽
@@ -876,16 +927,35 @@ if (productsList !== null) {
         e.preventDefault();
         swalFn("已加入購物車", "success", 800);
         addCartItem(productId, 1);
-        return;
       }
 
       ; // 加入我的最愛
 
       if (e.target.getAttribute("id") === "addFavorite") {
-        e.preventDefault(); // 取得 愛心icon DOM 元素
+        e.preventDefault(); // 產品列表跑 forEach 將 id 取出來與 productId 比對，符合的話加入我的最愛
 
-        heartIcon = e.target.firstElementChild;
-        addFavoriteItem(heartIcon, productId);
+        productsData.forEach(function (productItem) {
+          if (productItem.id !== productId) {
+            return;
+          } // 切換愛心樣式
+          // 點擊到加入我的最愛時，沒有實心愛心就加上並新增一筆資料到favoriteData
+
+
+          if (e.target.children[0].classList.contains("bi-heart")) {
+            // 加入我的愛心
+            addFavorites(productItem, productId);
+            toggleAddFavorite(productId);
+          } else {
+            // 有實心愛心就從 favoriteData移除一筆資料
+            delFavorite(productId);
+            toggleAddFavorite(productId);
+          }
+
+          ; // 將資料寫入 localStorage
+
+          localStorage.setItem("favoriteItem", JSON.stringify(favoriteData));
+          getFavoriteList();
+        });
       }
 
       ;
@@ -991,7 +1061,9 @@ function switchPage(e) {
 
   ;
   var clickPage = e.target.dataset.page;
-  renderPages(productsData, clickPage);
+  renderPages(productsData, clickPage); // 渲染愛心按鈕
+
+  renderAddBtn();
 }
 
 ;
