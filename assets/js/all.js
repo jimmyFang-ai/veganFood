@@ -110,10 +110,10 @@ function renderCartList(arr) {
 
     account.classList.add("d-none");
   } else {
-    arr.forEach(function (item) {
+    arr.forEach(function (cartItem) {
       //  計算總金額totalPrice.textContent = 
-      finalTotal += item.product.origin_price * item.qty;
-      str += "<li class=\"row  text-center gx-0  align-items-center mb-3\" data-cart-id=".concat(item.id, ">\n       <div class=\"col-4\">\n         <img class=\"img-fluid\" src=\"").concat(item.product.imageUrl, "\" alt=\"").concat(item.product.title, "\">\n       </div>\n       <div class=\"col-4\">\n         <p>").concat(item.product.title, "</p>\n          <small class=\"text-muted\"> x ").concat(item.qty, "</small>\n       </div>\n       <div class=\"col-3\">\n          <small class=\"text-muted\"> NT$ ").concat(tothousands(item.product.origin_price * item.qty), "</small>\n       </div>\n       <div class=\"col-1 px-0 mb-0\">\n         <button type=\"button\" class=\"btn  shadow-none  border-0 p-0\" id=\"delCartBtn\">\n         <i class=\"bi bi-trash-fill text-danger custom-icon-middle\"></i>\n         </button>\n        </div>\n     </li>");
+      finalTotal += cartItem.product.origin_price * cartItem.qty;
+      str += "<li class=\"row  text-center gx-0  align-items-center mb-3\" data-cart-id=".concat(cartItem.id, ">\n       <div class=\"col-4\">\n         <img class=\"img-fluid\" src=\"").concat(cartItem.product.imageUrl, "\" alt=\"").concat(cartItem.product.title, "\">\n       </div>\n       <div class=\"col-4\">\n         <p>").concat(cartItem.product.title, "</p>\n          <small class=\"text-muted\"> x ").concat(cartItem.qty, "</small>\n       </div>\n       <div class=\"col-3\">\n          <small class=\"text-muted\"> NT$ ").concat(tothousands(cartItem.product.origin_price * cartItem.qty), "</small>\n       </div>\n       <div class=\"col-1 px-0 mb-0\">\n         <button type=\"button\" class=\"btn  shadow-none  border-0 p-0\" id=\"delCartBtn\">\n         <i class=\"bi bi-trash-fill text-danger custom-icon-middle\"></i>\n         </button>\n        </div>\n     </li>");
     }); // 結帳畫面 出現
 
     account.classList.remove("d-none");
@@ -149,7 +149,6 @@ cartList.addEventListener("click", function (e) {
   var cartId = e.target.closest("li").dataset.cartId;
 
   if (e.target.getAttribute("id") === "delCartBtn") {
-    swalFn("已刪除單筆餐點", "success", 800);
     deleteCartItem(cartId);
   }
 });
@@ -157,6 +156,7 @@ cartList.addEventListener("click", function (e) {
 function deleteCartItem(cartId) {
   axios["delete"]("".concat(apiUrl, "api/").concat(apiPath, "/cart/").concat(cartId)).then(function (reponse) {
     getCartList();
+    swalFn("已刪除單筆餐點", "success", 800);
   })["catch"](function (error) {
     console.log(error.data);
   });
@@ -165,20 +165,20 @@ function deleteCartItem(cartId) {
 ; // 我的最愛 - 將產品加入我的最愛
 
 function addFavoriteItem(heartIcon, productId) {
-  productsData.forEach(function (item) {
-    if (item.id === productId) {
+  productsData.forEach(function (productsItem) {
+    if (productsItem.id === productId) {
       // 製作 愛心切換功能
       if (heartIcon.classList.contains("bi-heart")) {
         swalFn("已加入收藏", "success", 800); // 新增一筆產品到我的最愛
 
-        favoriteData.push(item);
+        favoriteData.push(productsItem);
         heartIcon.classList.remove("bi-heart");
         heartIcon.classList.add("bi-heart-fill");
         console.log(heartIcon, productId);
       } else {
         swalFn("已移除收藏", "warning", 800);
-        favoriteData = favoriteData.filter(function (item) {
-          return item.id !== productId;
+        favoriteData = favoriteData.filter(function (favoritesItem) {
+          return favoritesItem.id !== productId;
         });
         heartIcon.classList.remove("bi-heart-fill");
         heartIcon.classList.add("bi-heart");
@@ -228,8 +228,8 @@ function renderFavoriteList(arr) {
     str += "<tr><td colspan=\"3\">\n        <h5 class=\"py-4 text-muted\">\u7F8E\u98DF\u6536\u85CF\u662F\u7A7A\u7684\u5537!\n            \u5FEB\u53BB\u901B\u901B\u5427!\n        </h5>\n      </td>\n      </tr>";
     delAllFavoriteBtn.setAttribute("disabled", "");
   } else {
-    arr.forEach(function (item) {
-      str += "<tr data-favorite-id=".concat(item.id, ">\n      <td>\n        <img class=\"img-fluid\" src=\"").concat(item.imageUrl, "\" alt=\"").concat(item.title, "\">\n      </td>\n      <td>").concat(item.title, "</td>\n      <td>\n        <button type=\"button\" class=\"btn  shadow-none  border-0 p-0\" id=\"delFavoriteBtn\">\n          <i class=\"bi bi-trash-fill text-danger custom-icon-middle\"></i>\n        </button>\n            </td></tr>");
+    arr.forEach(function (favoritesItem) {
+      str += "<tr data-favorite-id=".concat(favoritesItem.id, ">\n      <td>\n        <img class=\"img-fluid\" src=\"").concat(favoritesItem.imageUrl, "\" alt=\"").concat(favoritesItem.title, "\">\n      </td>\n      <td>").concat(favoritesItem.title, "</td>\n      <td>\n        <button type=\"button\" class=\"btn  shadow-none  border-0 p-0\" id=\"delFavoriteBtn\">\n          <i class=\"bi bi-trash-fill text-danger custom-icon-middle\"></i>\n        </button>\n            </td></tr>");
     });
     delAllFavoriteBtn.removeAttribute("disabled");
   }
@@ -250,8 +250,8 @@ favoriteTable.addEventListener("click", function (e) {
 
   if (e.target.getAttribute("id") === "delFavoriteBtn") {
     var favoriteId = e.target.closest("#favoriteList tr").dataset.favoriteId;
-    favoriteData = favoriteData.filter(function (item) {
-      return item.id !== favoriteId;
+    favoriteData = favoriteData.filter(function (favoritesItem) {
+      return favoritesItem.id !== favoriteId;
     });
     swalFn("已移除收藏", "success", 800); // 移除 愛心icon 的狀態
 
@@ -292,10 +292,10 @@ function renderCheckCartList(arr) {
     str += "<tr><td colspan=\"6\" class=\"py-6\">\n        <h5 class=\"mb-5 text-center\">\u8CFC\u7269\u8ECA\u5167\u6C92\u6709\u5546\u54C1\uFF0C\u8D95\u5FEB\u53BB\u901B\u901B\u5427!\n            </h5>\n        <a class=\"btn btn-primary btn-lg\" href=\"./productLists.html\">\u7ACB\u5373\u9EDE\u9910</a>\n      </td>\n      </tr>";
     cartAccout.classList.add("d-none");
   } else {
-    arr.forEach(function (item, index) {
-      str += "<tr data-cart-id=".concat(item.id, ">\n            <td>\n\n            <div class=\"row gx-0 align-items-center\">\n            <div class=\"col-6 d-none d-md-block\">\n                <img class=\"img-fluid\" src=\"").concat(item.product.imageUrl, "\" alt=\"\u5DF4\u897F\u8393\u679C\u7897\">\n            </div>\n            <div class=\"col col-md-6\">\n                <p class=\"mb-2\">").concat(item.product.title, "</p>\n                <span>NT$ ").concat(item.product.origin_price, "</span>\n            </div>\n        </div>\n            </td>\n            <td>\n            <div class=\"d-flex justify-content-center\">\n            <div class=\"input-group text-center\" style=\"max-width: 160px;\">\n                <button type=\"button\" class=\"btn text-success fs-4 shadow-none px-1 px-md-3\" id=\"minusNumBtn\" data-product-num=\"").concat(index, "\"  data-product-id=\"").concat(item.product_id, "\">\n                    -\n                </button>\n                <input type=\"number\" class=\"form-control text-center w-25 px-1 px-md-2 \" id=\"productNumInput\"  data-product-num=\"").concat(index, "\"   value=\"").concat(item.qty, "\" min=\"1\" >\n                    <button type=\"button\" class=\"btn text-success fs-4  shadow-none px-1 px-md-3\" id=\"plusNumBtn\"data-product-num=\"").concat(index, "\"  data-product-id=\"").concat(item.product_id, "\"> \n                      +\n                    </button>\n            </div>\n        </div>\n            </td>\n            <td>NT$ ").concat(tothousands(item.product.origin_price * item.qty), "</td>\n            <td>\n                <button type=\"button\" class=\"btn  shadow-none  border-0 p-0\" id=\"delCartBtn\">\n                    <i class=\"bi bi-trash-fill text-danger custom-icon-middle\"></i>\n                </button>\n            </td>\n            </tr>"); //  計算總金額
+    arr.forEach(function (cartItem, index) {
+      str += "<tr data-cart-id=".concat(cartItem.id, ">\n            <td>\n\n            <div class=\"row gx-0 align-items-center\">\n            <div class=\"col-6 d-none d-md-block\">\n                <img class=\"img-fluid\" src=\"").concat(cartItem.product.imageUrl, "\" alt=\"\u5DF4\u897F\u8393\u679C\u7897\">\n            </div>\n            <div class=\"col col-md-6\">\n                <p class=\"mb-2\">").concat(cartItem.product.title, "</p>\n                <span>NT$ ").concat(cartItem.product.origin_price, "</span>\n            </div>\n        </div>\n            </td>\n            <td>\n            <div class=\"d-flex justify-content-center\">\n            <div class=\"input-group text-center\" style=\"max-width: 160px;\">\n                <button type=\"button\" class=\"btn text-success fs-4 shadow-none px-1 px-md-3\" id=\"minusNumBtn\" data-product-num=\"").concat(index, "\"  data-product-id=\"").concat(cartItem.product_id, "\">\n                    -\n                </button>\n                <input type=\"number\" class=\"form-control text-center w-25 px-1 px-md-2 \" id=\"productNumInput\"  data-product-num=\"").concat(index, "\"   value=\"").concat(cartItem.qty, "\" min=\"1\" >\n                    <button type=\"button\" class=\"btn text-success fs-4  shadow-none px-1 px-md-3\" id=\"plusNumBtn\"data-product-num=\"").concat(index, "\"  data-product-id=\"").concat(cartItem.product_id, "\"> \n                      +\n                    </button>\n            </div>\n        </div>\n            </td>\n            <td>NT$ ").concat(tothousands(cartItem.product.origin_price * cartItem.qty), "</td>\n            <td>\n                <button type=\"button\" class=\"btn  shadow-none  border-0 p-0\" id=\"delCartBtn\">\n                    <i class=\"bi bi-trash-fill text-danger custom-icon-middle\"></i>\n                </button>\n            </td>\n            </tr>"); //  計算總金額
 
-      finalTotal += item.product.origin_price * item.qty;
+      finalTotal += cartItem.product.origin_price * cartItem.qty;
     });
     cartAccout.classList.remove("d-none");
   } // 呈現總金額
@@ -325,7 +325,6 @@ if (checkCartList !== null) {
 
     if (e.target.getAttribute("id") === "delCartBtn") {
       e.preventDefault();
-      swalFn("已刪除單筆餐點", "success", 800);
       deleteCartItem(cartId);
     }
 
@@ -408,9 +407,9 @@ var selectProductsList = document.querySelector("#selectProductsList"); // 渲�
 
 function renderSelectProducts(arr) {
   var str = "";
-  arr.forEach(function (item) {
-    if (item.category === "主餐") {
-      str += "<div class=\"col mb-4\">\n            <a data-id=".concat(item.id, " href=\"./productInner.html?id=").concat(item.id, "\" class=\"text-dark\" id=\"productInnerUrl\">\n              <div class=\"card custom-card  shadow-sm\">\n              \n              <button type=\"button\" class=\"btn  position-absolute   shadow-none  border-0  fs-5 favoriteBtn\" id=\"addFavorite\" style=\"z-index: 1;\">\n                  <i class=\"bi bi-heart custom-icon-heart text-danger py-0\" ></i>\n             </button>\n      \n                <div class=\"card-img-wrap\">\n                  <img src=\"").concat(item.imageUrl, "\" class=\"card-img-top\" alt=\"").concat(item.title, "\">\n                  <p class=\"card-img-text mb-0  fs-5\">\u770B\u8A73\u7D30</p>\n                </div>\n                <div class=\"card-body\">\n                  <h5>").concat(item.title, "</h5>\n                  <p class=\"mb-3\">\u552E\u50F9: <span>NT$ ").concat(tothousands(item.origin_price), "</span></p>\n                  <button type=\"button\" class=\"btn btn-outline-success shadow-none   w-100 d-flex justify-content-center align-items-center\" id=\"addCart\">\n                  <i class=\"bi bi-cart-plus fs-5  me-2\"></i>\n                  \u52A0\u5165\u8CFC\u7269\u8ECA\n                  </button>\n                </div>\n              </div>\n            </a>\n            </div>");
+  arr.forEach(function (productsItem) {
+    if (productsItem.category === "主餐") {
+      str += "<div class=\"col mb-4\">\n            <a data-id=".concat(productsItem.id, " href=\"./productInner.html?id=").concat(productsItem.id, "\" class=\"text-dark\" id=\"productInnerUrl\">\n              <div class=\"card custom-card  shadow-sm\">\n              \n              <button type=\"button\" class=\"btn  position-absolute   shadow-none  border-0  fs-5 favoriteBtn\" id=\"addFavorite\" style=\"z-index: 1;\">\n                  <i class=\"bi bi-heart custom-icon-heart text-danger py-0\" ></i>\n             </button>\n      \n                <div class=\"card-img-wrap\">\n                  <img src=\"").concat(productsItem.imageUrl, "\" class=\"card-img-top\" alt=\"").concat(productsItem.title, "\">\n                  <p class=\"card-img-text mb-0  fs-5\">\u770B\u8A73\u7D30</p>\n                </div>\n                <div class=\"card-body\">\n                  <h5>").concat(productsItem.title, "</h5>\n                  <p class=\"mb-3\">\u552E\u50F9: <span>NT$ ").concat(tothousands(productsItem.origin_price), "</span></p>\n                  <button type=\"button\" class=\"btn btn-outline-success shadow-none   w-100 d-flex justify-content-center align-items-center\" id=\"addCart\">\n                  <i class=\"bi bi-cart-plus fs-5  me-2\"></i>\n                  \u52A0\u5165\u8CFC\u7269\u8ECA\n                  </button>\n                </div>\n              </div>\n            </a>\n            </div>");
     }
   });
   selectProductsList.innerHTML = str;
@@ -628,13 +627,13 @@ function renderOrderProdcuts(arr) {
   var str = ""; // 取的總金額 DOM 元素
 
   var orderTotalPrice = document.querySelector("#orderTotalPrice");
-  arr.forEach(function (item) {
-    str += "<li class=\"card  mb-3 shadow-sm\">\n        <div class=\"row align-items-center g-0\">\n            <div class=\"col\">\n                <div class=\"ratio ratio-4x3\">\n                    <img src=\"".concat(item.product.imageUrl, "\" class=\"img-fluid  rounded-start\"\n                        alt=\"").concat(item.product.title, "\">\n                </div>\n            </div>\n            <div class=\"col\">\n                <div class=\"card-body\">\n                    <h5 class=\"card-title\">").concat(item.product.title, "</h5>\n                    <p class=\"card-text mb-2\">\u6578\u91CF:").concat(item.qty, " </p>\n                    <p class=\"card-text\">\u7E3D\u50F9: <span>NT$ ").concat(item.qty * item.product.origin_price, " </span></p>\n                </div>\n            </div>\n        </div>\n    </li>"); // 計算總金額
+  arr.forEach(function (orderItem) {
+    str += "<li class=\"card  mb-3 shadow-sm\">\n        <div class=\"row align-items-center g-0\">\n            <div class=\"col\">\n                <div class=\"ratio ratio-4x3\">\n                    <img src=\"".concat(orderItem.product.imageUrl, "\" class=\"img-fluid  rounded-start\"\n                        alt=\"").concat(orderItem.product.title, "\">\n                </div>\n            </div>\n            <div class=\"col\">\n                <div class=\"card-body\">\n                    <h5 class=\"card-title\">").concat(orderItem.product.title, "</h5>\n                    <p class=\"card-text mb-2\">\u6578\u91CF:").concat(orderItem.qty, " </p>\n                    <p class=\"card-text\">\u7E3D\u50F9: <span>NT$ ").concat(tothousands(orderItem.qty * orderItem.product.origin_price), " </span></p>\n                </div>\n            </div>\n        </div>\n    </li>"); // 計算總金額
 
-    finalTotal += item.qty * item.product.origin_price;
+    finalTotal += orderItem.qty * orderItem.product.origin_price;
   }); // 呈現在付款頁面
 
-  orderTotalPrice.textContent = finalTotal;
+  orderTotalPrice.textContent = tothousands(finalTotal);
   orderProdcuts.innerHTML = str;
 } //付款 - 結帳
 
@@ -747,9 +746,9 @@ var popularProductList = document.querySelector("#popularProductList");
 
 function renderPopularProduct(arr) {
   var str = "";
-  arr.forEach(function (item) {
-    if (item.category === "飲品") {
-      str += "<div class=\"col mb-4\">\n            <a data-id=".concat(item.id, " href=\"./productInner.html?id=").concat(item.id, "\" class=\"text-dark\" id=\"productInnerUrl\">\n              <div class=\"card custom-card  shadow-sm\">\n              \n              <button type=\"button\" class=\"btn  position-absolute   shadow-none  border-0  fs-5 favoriteBtn\" id=\"addFavorite\" style=\"z-index: 1;\">\n                  <i class=\"bi bi-heart custom-icon-heart text-danger py-0\" ></i>\n             </button>\n      \n                <div class=\"card-img-wrap\">\n                  <img src=\"").concat(item.imageUrl, "\" class=\"card-img-top\" alt=\"").concat(item.title, "\">\n                  <p class=\"card-img-text mb-0  fs-5\">\u770B\u8A73\u7D30</p>\n                </div>\n                <div class=\"card-body\">\n                  <h5>").concat(item.title, "</h5>\n                  <p class=\"mb-3\">\u552E\u50F9: <span>NT$ ").concat(tothousands(item.origin_price), "</span></p>\n                  <button type=\"button\" class=\"btn btn-outline-success shadow-none   w-100 d-flex justify-content-center align-items-center\" id=\"addCart\">\n                  <i class=\"bi bi-cart-plus fs-5  me-2\"></i>\n                  \u52A0\u5165\u8CFC\u7269\u8ECA\n                  </button>\n                </div>\n              </div>\n            </a>\n            </div>");
+  arr.forEach(function (productsItem) {
+    if (productsItem.category === "飲品") {
+      str += "<div class=\"col mb-4\">\n            <a data-id=".concat(productsItem.id, " href=\"./productInner.html?id=").concat(productsItem.id, "\" class=\"text-dark\" id=\"productInnerUrl\">\n              <div class=\"card custom-card  shadow-sm\">\n              \n              <button type=\"button\" class=\"btn  position-absolute   shadow-none  border-0  fs-5 favoriteBtn\" id=\"addFavorite\" style=\"z-index: 1;\">\n                  <i class=\"bi bi-heart custom-icon-heart text-danger py-0\" ></i>\n             </button>\n      \n                <div class=\"card-img-wrap\">\n                  <img src=\"").concat(productsItem.imageUrl, "\" class=\"card-img-top\" alt=\"").concat(productsItem.title, "\">\n                  <p class=\"card-img-text mb-0  fs-5\">\u770B\u8A73\u7D30</p>\n                </div>\n                <div class=\"card-body\">\n                  <h5>").concat(productsItem.title, "</h5>\n                  <p class=\"mb-3\">\u552E\u50F9: <span>NT$ ").concat(tothousands(productsItem.origin_price), "</span></p>\n                  <button type=\"button\" class=\"btn btn-outline-success shadow-none   w-100 d-flex justify-content-center align-items-center\" id=\"addCart\">\n                  <i class=\"bi bi-cart-plus fs-5  me-2\"></i>\n                  \u52A0\u5165\u8CFC\u7269\u8ECA\n                  </button>\n                </div>\n              </div>\n            </a>\n            </div>");
     }
   });
   popularProductList.innerHTML = str;
@@ -798,8 +797,8 @@ var btnGroup = document.querySelector("#btn-group"); // 商品資訊 - 渲染產
 
 function renderProductsList(arr) {
   var str = "";
-  arr.forEach(function (item) {
-    str += "<div class=\"col mb-4\">\n      <a data-id=".concat(item.id, " href=\"./productInner.html?id=").concat(item.id, "\" class=\"text-dark\" id=\"productInnerUrl\">\n        <div class=\"card custom-card  shadow-sm\">\n        \n        <button type=\"button\" class=\"btn  position-absolute   shadow-none  border-0  fs-5 favoriteBtn\" id=\"addFavorite\" style=\"z-index: 1;\">\n            <i class=\"bi bi-heart custom-icon-heart text-danger py-0\" ></i>\n       </button>\n\n          <div class=\"card-img-wrap\">\n            <img src=\"").concat(item.imageUrl, "\" class=\"card-img-top\" alt=\"").concat(item.title, "\">\n            <p class=\"card-img-text mb-0  fs-5\">\u770B\u8A73\u7D30</p>\n          </div>\n          <div class=\"card-body\">\n            <h5>").concat(item.title, "</h5>\n            <p class=\"mb-3\">\u552E\u50F9: <span>NT$ ").concat(tothousands(item.origin_price), "</span></p>\n            <button type=\"button\" class=\"btn btn-outline-success shadow-none   w-100 d-flex justify-content-center align-items-center\" id=\"addCart\">\n            <i class=\"bi bi-cart-plus fs-5  me-2\"></i>\n            \u52A0\u5165\u8CFC\u7269\u8ECA\n            </button>\n          </div>\n        </div>\n      </a>\n      </div>");
+  arr.forEach(function (productsItem) {
+    str += "<div class=\"col mb-4\">\n      <a data-id=".concat(productsItem.id, " href=\"./productInner.html?id=").concat(productsItem.id, "\" class=\"text-dark\" id=\"productInnerUrl\">\n        <div class=\"card custom-card  shadow-sm\">\n        \n        <button type=\"button\" class=\"btn  position-absolute   shadow-none  border-0  fs-5 favoriteBtn\" id=\"addFavorite\" style=\"z-index: 1;\">\n            <i class=\"bi bi-heart custom-icon-heart text-danger py-0\" ></i>\n       </button>\n\n          <div class=\"card-img-wrap\">\n            <img src=\"").concat(productsItem.imageUrl, "\" class=\"card-img-top\" alt=\"").concat(productsItem.title, "\">\n            <p class=\"card-img-text mb-0  fs-5\">\u770B\u8A73\u7D30</p>\n          </div>\n          <div class=\"card-body\">\n            <h5>").concat(productsItem.title, "</h5>\n            <p class=\"mb-3\">\u552E\u50F9: <span>NT$ ").concat(tothousands(productsItem.origin_price), "</span></p>\n            <button type=\"button\" class=\"btn btn-outline-success shadow-none   w-100 d-flex justify-content-center align-items-center\" id=\"addCart\">\n            <i class=\"bi bi-cart-plus fs-5  me-2\"></i>\n            \u52A0\u5165\u8CFC\u7269\u8ECA\n            </button>\n          </div>\n        </div>\n      </a>\n      </div>");
   });
   productsList.innerHTML = str;
 }
@@ -824,8 +823,8 @@ function changeTab(e) {
 
     var allbtns = document.querySelectorAll("#btn-group a"); // allTabs 回傳類陣列跑foreach 先將 active 全部移除 再加上去
 
-    allbtns.forEach(function (item) {
-      item.classList.remove("active");
+    allbtns.forEach(function (btn) {
+      btn.classList.remove("active");
     }); //點擊到對應的 按鈕 再增加 active 樣式
 
     e.target.classList.add("active");
@@ -848,8 +847,8 @@ function updateProductsList() {
     filtersData = productsData;
     productsCategory.textContent = "全部商品";
   } else {
-    filtersData = productsData.filter(function (item) {
-      return item.category === toggleCategory;
+    filtersData = productsData.filter(function (productsItem) {
+      return productsItem.category === toggleCategory;
     });
     productsCategory.textContent = toggleCategory;
   }
