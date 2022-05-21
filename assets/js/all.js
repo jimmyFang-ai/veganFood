@@ -10,7 +10,6 @@ var productsData = []; // 購物車 data
 var cartData = []; // 我的最愛 Data 
 
 var favoriteData = JSON.parse(localStorage.getItem("favoriteItem")) || []; // DOM 元素管理
-// const productsList = document.querySelector("#productsList");
 
 var cartList = document.querySelector("#cartList");
 var favoriteList = document.querySelector("#favoriteList"); // 初始化
@@ -195,6 +194,8 @@ function toggleAddFavorite(id) {
   if (addFavoriteBtn !== null) {
     addFavoriteBtn.classList.toggle("bi-heart");
     addFavoriteBtn.classList.toggle("bi-heart-fill");
+  } else {
+    renderFavoriteList(favoriteData);
   }
 }
 
@@ -205,6 +206,9 @@ function renderAddFavoriteBtn() {
     favoriteData.forEach(function (favorite) {
       return toggleAddFavorite(favorite.id);
     });
+  } else {
+    console.log("沒有呈現愛心按鈕");
+    renderFavoriteList(favoriteData);
   }
 } // 我的最愛 - 取得收藏產品列表 
 
@@ -261,8 +265,7 @@ function renderFavoriteList(arr) {
 
 var favoriteTable = document.querySelector("#favoriteTable");
 favoriteTable.addEventListener("click", function (e) {
-  e.preventDefault();
-  console.log(e.target); // 單筆刪除
+  e.preventDefault(); // 單筆刪除
 
   if (e.target.getAttribute("id") === "delFavoriteBtn") {
     var favoriteId = e.target.closest("#favoriteList tr").dataset.favoriteId;
@@ -281,7 +284,7 @@ favoriteTable.addEventListener("click", function (e) {
   ; // 將資料寫入 localStorage
 
   localStorage.setItem("favoriteItem", JSON.stringify(favoriteData));
-  getFavoriteList();
+  renderFavoriteList(favoriteData);
 }); //我的最愛 - 移除單筆最愛
 
 function delFavorite(id) {
