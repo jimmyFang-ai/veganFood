@@ -1,0 +1,11 @@
+$utilities: map-merge(
+  $utilities,
+  (
+    "ratio": (
+        property: --bs-aspect-ratio,
+        class: ratio,
+        responsive: true,
+        values: ($aspect-ratios),
+      ),
+  )
+);
