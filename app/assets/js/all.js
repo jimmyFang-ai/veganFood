@@ -13,7 +13,6 @@ let favoriteData = JSON.parse(localStorage.getItem("favoriteItem")) || [];
 
 
 // DOM 元素管理
-// const productsList = document.querySelector("#productsList");
 const cartList = document.querySelector("#cartList");
 const favoriteList = document.querySelector("#favoriteList");
 
@@ -227,6 +226,8 @@ function toggleAddFavorite(id) {
     if (addFavoriteBtn !== null) {
         addFavoriteBtn.classList.toggle("bi-heart");
         addFavoriteBtn.classList.toggle("bi-heart-fill");
+    } else {
+        renderFavoriteList(favoriteData);
     }
 };
 
@@ -234,6 +235,9 @@ function toggleAddFavorite(id) {
 function renderAddFavoriteBtn() {
     if (favoriteData !== null) {
         favoriteData.forEach((favorite) => toggleAddFavorite(favorite.id));
+    } else {
+        console.log("沒有呈現愛心按鈕");
+        renderFavoriteList(favoriteData);
     }
 }
 
@@ -253,7 +257,6 @@ function getFavoriteList() {
     if (selectProductsList !== null) {
         renderFavoriteList(favoriteData);
     };
-
 };
 
 // 我的最愛 - 渲染收藏產品列表
@@ -305,8 +308,6 @@ const favoriteTable = document.querySelector("#favoriteTable");
 favoriteTable.addEventListener("click", function (e) {
     e.preventDefault();
 
-    console.log(e.target);
-
     // 單筆刪除
     if (e.target.getAttribute("id") === "delFavoriteBtn") {
         const favoriteId = e.target.closest("#favoriteList tr").dataset.favoriteId;
@@ -323,7 +324,7 @@ favoriteTable.addEventListener("click", function (e) {
 
     // 將資料寫入 localStorage
     localStorage.setItem("favoriteItem", JSON.stringify(favoriteData));
-    getFavoriteList();
+    renderFavoriteList(favoriteData);
 });
 
 
