@@ -45,6 +45,7 @@ function getAllProducts() {
         .then(function (response) {
             productsData = response.data.products;
 
+
             //資料回傳後， 關閉loading
             setTimeout(() => { toggleLoading(false); }, 600);
 
@@ -54,30 +55,30 @@ function getAllProducts() {
                 renderProductsList(productsData);
                 //資料回傳 寫入分頁函式
                 renderPages(productsData, 1);
-                // 渲染愛心按鈕
-                renderAddBtn();
+                // 呈現愛心按鈕
+                renderAddFavoriteBtn();
             };
 
             // 確認有 popularProductList DOM 才執行
             if (popularProductList !== null) {
                 // 呈現 熱銷餐點列表
                 renderPopularProduct(productsData);
-                // 渲染愛心按鈕
-                renderAddBtn();
+                // 呈現愛心按鈕
+                renderAddFavoriteBtn();
             };
 
             // 確認有 selectProductsList DOM 才執行 
             if (selectProductsList !== null) {
                 // 呈現 主廚推薦餐點列表
                 renderSelectProducts(productsData);
-                // 渲染愛心按鈕
-                renderAddBtn();
+                // 呈現愛心按鈕
+                renderAddFavoriteBtn();
             };
         })
 
-        // .catch(function (error) {
-        //     console.log(error.response.data);
-        // })
+        .catch(function (error) {
+            console.log(error.response.data);
+        })
 };
 
 
@@ -212,28 +213,29 @@ function addFavorites(productItem, productId) {
 
     // 要避免重複加入，所以用some功能比對是否有重複id
     if (favoriteData.some((favorite) => favorite.id === productId)) {
-        return swalFn("重複加入", "danger", 800);
+        return swalFn("重複加入", "error", 800);
     };
 
     favoriteData.push(productItem);
     swalFn("已加入最愛", "success", 800);
 };
 
+
 // 我的最愛 - 切換愛心按鈕
 function toggleAddFavorite(id) {
-    const addFaBtn = document.querySelector(`#addFavorite i[data-favorite-id=${id}]`);
-
-    addFaBtn.classList.toggle("bi-heart");
-    addFaBtn.classList.toggle("bi-heart-fill");
+    const addFavoriteBtn = document.querySelector(`#addFavorite i[data-favorite-id=${id}]`);
+    if (addFavoriteBtn !== null) {
+        addFavoriteBtn.classList.toggle("bi-heart");
+        addFavoriteBtn.classList.toggle("bi-heart-fill");
+    }
 };
 
 // 我的最愛 - 渲染切換愛心按鈕
-function renderAddBtn() {
-    if (favoriteData === null) return;
-    favoriteData.forEach((favorite) => toggleAddFavorite(favorite.id));
-    console.log(favoriteData);
+function renderAddFavoriteBtn() {
+    if (favoriteData !== null) {
+        favoriteData.forEach((favorite) => toggleAddFavorite(favorite.id));
+    }
 }
-
 
 // 我的最愛 - 取得收藏產品列表 
 function getFavoriteList() {
@@ -303,10 +305,11 @@ const favoriteTable = document.querySelector("#favoriteTable");
 favoriteTable.addEventListener("click", function (e) {
     e.preventDefault();
 
-    const favoriteId = e.target.closest("#favoriteList tr").dataset.favoriteId;
+    console.log(e.target);
 
     // 單筆刪除
     if (e.target.getAttribute("id") === "delFavoriteBtn") {
+        const favoriteId = e.target.closest("#favoriteList tr").dataset.favoriteId;
         delFavorite(favoriteId)
         toggleAddFavorite(favoriteId);
     };
@@ -315,9 +318,8 @@ favoriteTable.addEventListener("click", function (e) {
     if (e.target.getAttribute("id") === "delAllFavoriteBtn") {
         favoriteData = [];
         swalFn("已移除所有收藏", "success", 800);
-        toggleAddFavorite(favoriteId);
+        getAllProducts();
     };
-
 
     // 將資料寫入 localStorage
     localStorage.setItem("favoriteItem", JSON.stringify(favoriteData));
@@ -327,7 +329,7 @@ favoriteTable.addEventListener("click", function (e) {
 
 //我的最愛 - 移除單筆最愛
 function delFavorite(id) {
-
+    // 確認 favoriteData 有資料，就會回傳true
     if (!favoriteData) { return };
 
     // 取得我的最愛列表內的 單一品項 id
@@ -335,9 +337,11 @@ function delFavorite(id) {
         (favorite) => favorite.id === id
     );
 
+    // 如果favoriteData 沒有同樣的 id 品項就return中斷
     if (delFavoriteIndex === -1) return;
     favoriteData.splice(delFavoriteIndex, 1);
 
     swalFn("已移除收藏", "warning", 800);
 }
+
 

@@ -68,7 +68,7 @@ function changeTab(e) {
 
   // 更新餐點列表
   updateProductsList();
-  
+
 };
 
 
@@ -83,9 +83,11 @@ function updateProductsList() {
   if (toggleCategory === "全部商品") {
     filtersData = productsData;
     productsCategory.textContent = "全部商品";
+
   } else {
     filtersData = productsData.filter(productsItem => productsItem.category === toggleCategory);
     productsCategory.textContent = toggleCategory;
+
   };
 
   // 呈現該頁資料畫面
@@ -94,6 +96,8 @@ function updateProductsList() {
   // 呈現分頁
   renderPages(filtersData, 1);
 
+  // 呈現愛心按鈕
+  renderAddFavoriteBtn();
 };
 
 
@@ -135,6 +139,7 @@ if (productsList !== null) {
             toggleAddFavorite(productId);
           };
 
+
           // 將資料寫入 localStorage
           localStorage.setItem("favoriteItem", JSON.stringify(favoriteData));
           getFavoriteList();
@@ -143,6 +148,7 @@ if (productsList !== null) {
     }
   });
 };
+
 
 
 // 分頁功能 - 整體分頁功能
@@ -244,8 +250,6 @@ function renderPageBtn(pageInfo) {
   };
 
   pageId.innerHTML = str;
-
- 
 };
 
 //分頁功能 - 點擊按鈕切換頁面功能
@@ -261,5 +265,5 @@ function switchPage(e) {
   renderPages(productsData, clickPage);
 
   // 渲染愛心按鈕
-  renderAddBtn();
+  renderAddFavoriteBtn();
 };
