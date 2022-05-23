@@ -115,8 +115,8 @@ if (productNumWrap !== null) {
         if (e.target.getAttribute("id") === "addCartBtn") {
             const productId = e.target.dataset.productId;
             let productNumSum = parseInt(productNum.value);
-            swalFn("已加入購物車", "success", 800);
             addCartItem(productId, productNumSum);
+            swalFn("已加入購物車", "success", 800);
         }
     })
 };
@@ -143,7 +143,7 @@ function renderPopularProduct(arr) {
                 </div>
                 <div class="card-body">
                   <h5>${productsItem.title}</h5>
-                  <p class="mb-3">售價: <span>NT$ ${tothousands(productsItem.origin_price)}</span></p>
+                  <p class="mb-3">售價:NT$ <span> ${tothousands(productsItem.origin_price)}</span></p>
                   <button type="button" class="btn btn-outline-success shadow-none   w-100 d-flex justify-content-center align-items-center" id="addCart">
                   <i class="bi bi-cart-plus fs-5  me-2"></i>
                   加入購物車
@@ -169,9 +169,8 @@ if (popularProductList !== null) {
             // 加入購物車
             if (e.target.getAttribute("id") === "addCart") {
                 e.preventDefault();
-                swalFn("已加入購物車", "success", 800);
                 addCartItem(productId, 1);
-                return;
+                swalFn("已加入購物車", "success", 800);
             };
 
             // 加入我的最愛
@@ -189,10 +188,12 @@ if (popularProductList !== null) {
                         // 加入我的愛心
                         addFavorites(productItem, productId);
                         toggleAddFavorite(productId);
+                        swalFn("已加入收藏", "success", 800);
                     } else {
                         // 有實心愛心就從 favoriteData移除一筆資料
                         delFavorite(productId)
                         toggleAddFavorite(productId);
+                        swalFn("已移除收藏", "warning", 800);
                     };
 
                     // 將資料寫入 localStorage

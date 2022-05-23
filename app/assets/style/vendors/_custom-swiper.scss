@@ -10,20 +10,6 @@
   }
 
  
-// 主廚推薦區塊
-// .swiper-products {
-//   .swiper-wrapper {
-//     height: 1300px;
-//   } 
-  
-//   @include media-breakpoint-up(md){
-//     .swiper-wrapper {
-//       height: auto;
-//     }
-//   }
-// }
-
-
 //分頁  active 顏色
 .swiper-recommend  .swiper-pagination-bullet-active, .swiper-news .swiper-pagination-bullet-active {
 	background-color:$primary;

@@ -32,7 +32,7 @@
 .custom-card {
 // 補上滑入按鈕色彩
 &:hover .btn-outline-success {
-  color: #fff;
+  color: $white;
   background-color: $green;
 }
 

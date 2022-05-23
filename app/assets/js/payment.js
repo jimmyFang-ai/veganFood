@@ -90,8 +90,8 @@ function renderOrderProdcuts(arr) {
                 </div>
             </div>
             <div class="col">
-                <div class="card-body">
-                    <h5 class="card-title">${orderItem.product.title}</h5>
+                <div class="card-body py-0">
+                    <h5 class="fs-6 fs-md-5 card-title">${orderItem.product.title}</h5>
                     <p class="card-text mb-2">數量:${orderItem.qty} </p>
                     <p class="card-text">總價: <span>NT$ ${tothousands(orderItem.qty * orderItem.product.origin_price)} </span></p>
                 </div>

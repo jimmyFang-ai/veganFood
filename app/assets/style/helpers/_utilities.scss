@@ -7,5 +7,13 @@ $utilities: map-merge(
         responsive: true,
         values: ($aspect-ratios),
       ),
+      "font-size":
+       map-merge(
+        map-get($utilities, "font-size"),
+        (
+          responsive: true,
+          rfs: false,
+        )
+      ),
   )
 );

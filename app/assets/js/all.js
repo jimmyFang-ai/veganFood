@@ -87,7 +87,6 @@ function getCartList() {
         .then(function (response) {
             cartData = response.data.data.carts;
 
-
             // 呈現購物車列表
             renderCartList(cartData);
 
@@ -197,7 +196,7 @@ function deleteCartItem(cartId) {
     axios.delete(`${apiUrl}api/${apiPath}/cart/${cartId}`)
         .then(function (reponse) {
             getCartList();
-            swalFn("已刪除單筆餐點", "success", 800);
+            swalFn("已刪除單筆商品", "success", 800);
         })
         .catch(function (error) {
             console.log(error.data);
@@ -216,7 +215,6 @@ function addFavorites(productItem, productId) {
     };
 
     favoriteData.push(productItem);
-    swalFn("已加入最愛", "success", 800);
 };
 
 
@@ -236,7 +234,6 @@ function renderAddFavoriteBtn() {
     if (favoriteData !== null) {
         favoriteData.forEach((favorite) => toggleAddFavorite(favorite.id));
     } else {
-        console.log("沒有呈現愛心按鈕");
         renderFavoriteList(favoriteData);
     }
 }
@@ -313,13 +310,14 @@ favoriteTable.addEventListener("click", function (e) {
         const favoriteId = e.target.closest("#favoriteList tr").dataset.favoriteId;
         delFavorite(favoriteId)
         toggleAddFavorite(favoriteId);
+        swalFn("已移除單筆收藏", "success", 800);
     };
 
     // 刪除全部
     if (e.target.getAttribute("id") === "delAllFavoriteBtn") {
         favoriteData = [];
-        swalFn("已移除所有收藏", "success", 800);
         getAllProducts();
+        swalFn("已移除所有收藏", "success", 800);
     };
 
     // 將資料寫入 localStorage
@@ -341,8 +339,6 @@ function delFavorite(id) {
     // 如果favoriteData 沒有同樣的 id 品項就return中斷
     if (delFavoriteIndex === -1) return;
     favoriteData.splice(delFavoriteIndex, 1);
-
-    swalFn("已移除收藏", "warning", 800);
 }
 
 

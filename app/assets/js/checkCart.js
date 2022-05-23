@@ -1,7 +1,6 @@
 
 const checkCartList = document.querySelector("#checkCartList");
 
-
 // 確認購物車 - 渲染購物車列表
 function renderCheckCartList(arr) {
 
@@ -17,6 +16,9 @@ function renderCheckCartList(arr) {
     // 計算總金額
     const cartTotalPrice = document.querySelector("#cartTotalPrice");
 
+    // 前往填寫訂單按鈕
+    const orderFormBtn = document.querySelector("#orderFormBtn");
+
 
     if (arr.length < 1) {
         str += `<tr><td colspan="6" class="py-6">
@@ -27,6 +29,7 @@ function renderCheckCartList(arr) {
       </tr>`;
 
         cartAccout.classList.add("d-none");
+        orderFormBtn.classList.add("disabled");
     } else {
         arr.forEach((cartItem, index) => {
             str += `<tr data-cart-id=${cartItem.id}>
@@ -65,11 +68,10 @@ function renderCheckCartList(arr) {
 
             //  計算總金額
             finalTotal += cartItem.product.origin_price * cartItem.qty;
-
-
         });
 
         cartAccout.classList.remove("d-none");
+        orderFormBtn.classList.remove("disabled");
     }
 
     // 呈現總金額
@@ -108,6 +110,7 @@ if (checkCartList !== null) {
             // 取出 購物車產品的數量
             const productNum = e.target.dataset.productNum;
             changeCartNum(btnId, cartId, productId, productNum);
+
         };
     });
 };
@@ -121,8 +124,9 @@ if (delAllCartBtn !== null) {
 
         axios.delete(`${apiUrl}api/${apiPath}/carts`)
             .then(function (reponse) {
-                swalFn("購物車已清空", "success", 800);
                 getCartList();
+                swalFn("購物車已清空", "success", 800);
+
             })
 
             .catch(function (error) {
@@ -165,6 +169,7 @@ function changeCartNum(btnId, cartId, productId, productNum) {
             //更新數量後， 關閉loading
             setTimeout(() => { toggleLoading(false); }, 600);
             getCartList();
+            swalFn("購物車已更新", "success", 800);
         })
 
         .catch(function (error) {
