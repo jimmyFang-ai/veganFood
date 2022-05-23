@@ -131,13 +131,16 @@
         <div class="row  align-items-center   mb-5">
             <!-- 菜單圖片 -->
             <div class="col-lg-6">
-                <img src="" class="img-fluid rounded-3"  id="productImg">
+                <div class="ratio ratio-4x3">
+                    <img src="" class="img-fluid rounded-3"  id="productImg">
+                </div>
+               
             </div>
             <!-- 菜單訂購 -->
             <div class="col-lg-6">
                 <div class="p-4">
                     <h2 class="fw-bold my-3 text-success" id="productTitle"></h2>
-                    <p class="fs-5" id="productDescription"></p>
+                    <p class="fs-6 fs-md-5" id="productDescription"></p>
                     <ul>
                         <li>
                             <i class="bi bi-person-plus-fill fs-3 me-4 custom-icon-middle"></i>加入會員可享更多優惠
@@ -146,13 +149,13 @@
                             <i class="bi bi-bicycle fs-2 me-4 custom-icon-middle"></i>三公里以內距離免費外送
                         </li>
                     </ul>
-                    <p class="fs-3 text-warning fw-bold mb-3">售價: NT$ <span id="productPrice">NT$</span></p>
+                    <p class="fs-3 text-warning fw-bold mb-3">售價: NT$ <span id="productPrice"></span></p>
                     <div class="d-flex align-items-center" id="productNumWrap">
                         <div class="input-group w-50 me-3">
                             <button type="button" class="btn btn-dark btn-sm" id="minusNumBtn">
                                 <i class="bi bi-dash"></i>
                             </button>
-                            <input type="number" class="form-control text-center" id="productNum" value="1" min="1" readonly>
+                            <input type="number" class="form-control text-center" id="productNum" value="1" min="1">
                             <button type="button" class="btn btn-dark btn-sm" id="plusNumBtn">
                                 <i class="bi bi-plus"></i>
                             </button>
@@ -254,7 +257,7 @@
               </li>
               <li>
                 <a class=" custom-nav-link p-2" href="mailto:xxxd@hexschool.com"><i
-                    class="bi bi-envelope-fill  me-2 text-primary"></i>客服信箱:xxxd@hexschool.com</a>
+                    class="bi bi-envelope-fill  me-2 text-primary"></i>客服信箱: veganfood@gmail.com</a>
               </li>
               <li>
                 <p class="p-2  custom-nav-link">
