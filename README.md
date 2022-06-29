@@ -12,7 +12,7 @@ Demo: https://jimmyfang-ai.github.io/veganFood/
 * 切版: `Bootstrap` 、`SASS`
 * 功能: `Axios`、`JavaScript`、`Validate`
 * 動態: `AOS`、`Loader`
-* SEO: 撰寫 meta 優化 SEO 搜尋
+* SEO: 使用 Google 分析， 優化 SEO 搜尋
 * 其他套件: 使用 `Gulp.js` 進行開發、`Git` 版本控制、`Swiper`
 
 
