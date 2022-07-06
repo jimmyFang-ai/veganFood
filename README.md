@@ -6,7 +6,7 @@
 Demo: https://jimmyfang-ai.github.io/veganFood/
 
 ## **專案說明**
-設計稿：**六角學院** 提供
+設計稿：**網頁版型都是個人自行設計** 
 
 ### **使用技術**
 * 切版: `Bootstrap` 、`SASS`
