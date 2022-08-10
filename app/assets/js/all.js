@@ -25,11 +25,7 @@ function init() {
     getFavoriteList(); // 取得我的最愛列表
     getOrderList();// 取的訂單資訊
 
-    AOS.init({
-        duration: 1500,
-        easing: 'ease',
-        once: true,
-    }); // 初始化 Aos動畫套件
+    AOS.init();// 初始化 Aos動畫套件
 };
 init();
 
