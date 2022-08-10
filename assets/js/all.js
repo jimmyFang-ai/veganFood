@@ -25,11 +25,7 @@ function init() {
 
   getOrderList(); // 取的訂單資訊
 
-  AOS.init({
-    duration: 1500,
-    easing: 'ease',
-    once: true
-  }); // 初始化 Aos動畫套件
+  AOS.init(); // 初始化 Aos動畫套件
 }
 
 ;
@@ -301,6 +297,17 @@ function delFavorite(id) {
   if (delFavoriteIndex === -1) return;
   favoriteData.splice(delFavoriteIndex, 1);
 }
+"use strict";
+
+AOS.init({
+  offset: 60,
+  delay: 0,
+  duration: 600,
+  easing: 'ease',
+  once: true,
+  mirror: false,
+  anchorPlacement: 'top-bottom'
+});
 "use strict";
 
 var checkCartList = document.querySelector("#checkCartList"); // 確認購物車 - 渲染購物車列表
