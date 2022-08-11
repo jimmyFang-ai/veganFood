@@ -39,7 +39,7 @@ function renderSelectProducts(arr) {
 
 // 主廚推薦餐點 - 新增購物車 及 新增最愛功能
 
-if (selectProductsList !== null) {
+if (selectProductsList) {
     selectProductsList.addEventListener("click", function (e) {
         if (e.target.nodeName === "BUTTON") {
             //取出產品 id

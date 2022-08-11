@@ -43,7 +43,7 @@ function renderProductsList(arr) {
 let toggleCategory = "全部商品";
 
 // 判斷當下載入頁面是否有 btnGroup DOM 元素
-if (btnGroup !== null) {
+if (btnGroup) {
   // btnGroup 綁定監聽事件
   btnGroup.addEventListener("click", changeTab);
 };
@@ -82,11 +82,9 @@ function updateProductsList() {
   if (toggleCategory === "全部商品") {
     filtersData = productsData;
     productsCategory.textContent = "全部商品";
-
   } else {
     filtersData = productsData.filter(productsItem => productsItem.category === toggleCategory);
     productsCategory.textContent = toggleCategory;
-
   };
 
   // 呈現該頁資料畫面
@@ -102,7 +100,7 @@ function updateProductsList() {
 
 
 // 新增功能整合 - 新增購物車 及 新增最愛功能
-if (productsList !== null) {
+if (productsList) {
   // 在產品列表綁定監聽
   productsList.addEventListener("click", function (e) {
 
@@ -124,7 +122,7 @@ if (productsList !== null) {
         // 產品列表跑 forEach 將 id 取出來與 productId 比對，符合的話加入我的最愛
         productsData.forEach((productItem) => {
 
-          if (productItem.id !== productId) { return; }
+          if (productItem.id !== productId)  return
 
           // 切換愛心樣式
           // 點擊到加入我的最愛時，沒有實心愛心就加上並新增一筆資料到favoriteData
@@ -162,6 +160,7 @@ function renderPages(data, nowPage) {
   // 因為計算過程會有餘數產生，所以要無條件進位，使用 Math.ceil()函式取得一個大於等於指定數字的最小整數。
   const totalPages = Math.ceil(data.length / dataPerPage);
 
+  
 
   // 頁數
   // 當前頁數，對應現在當前頁數
@@ -170,6 +169,8 @@ function renderPages(data, nowPage) {
   if (currentPage > totalPages) {
     currentPage = totalPages;
   };
+
+
 
   // 資料筆數
   const minData = (currentPage * dataPerPage) - dataPerPage + 1; // 最小資料筆數
@@ -201,15 +202,13 @@ function renderPages(data, nowPage) {
 
   // 呈現出分頁按鈕
   renderPageBtn(pageInfo);
-
-  // console.log(`全部資料:${data.length} 每一頁顯示:${dataPerPage}筆 總頁數:${totalPages}`);
 };
 
 // 取得分頁 DOM 元素
 const pageId = document.querySelector("#pageId");
 
 // 在 pageId 綁定監聽
-if (pageId !== null) {
+if (pageId) {
   pageId.addEventListener("click", switchPage);
 };
 
@@ -230,7 +229,7 @@ function renderPageBtn(pageInfo) {
     for (let i = 1; i <= totalPages; i++) {
       // 一開始預設顯示第一頁，如果是第一頁會加上 .active 樣式
       str += (Number(pageInfo.currentPage) === i) ?
-        `<li class="page-item active"><a class="page-link" href="#" aria-label="Previous" data-page="${i}">${i}</a></li>`
+        `<li class="page-item active"><a class="page-link" href="#"  data-page="${i}">${i}</a></li>`
         : `<li class="page-item"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
     };
 
@@ -244,7 +243,7 @@ function renderPageBtn(pageInfo) {
     for (let i = 1; i <= totalPages; i++) {
       // 一開始預設顯示第一頁，如果是第一頁會加上 .active 樣式
       str += (Number(pageInfo.currentPage) === i) ?
-        `<li class="page-item active"><a class="page-link" href="#" aria-label="Previous" data-page="${i}">${i}</a></li>`
+        `<li class="page-item active"><a class="page-link" href="#"  data-page="${i}">${i}</a></li>`
         : `<li class="page-item"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
     };
 

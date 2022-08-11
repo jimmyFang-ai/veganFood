@@ -45,7 +45,7 @@ function getAllProducts() {
             setTimeout(() => { toggleLoading(false); }, 600);
 
             // 確認有 productsList DOM 才執行
-            if (productsList !== null) {
+            if (productsList) {
                 //資料回傳後渲染畫面
                 renderProductsList(productsData);
                 //資料回傳 寫入分頁函式
@@ -55,7 +55,7 @@ function getAllProducts() {
             };
 
             // 確認有 popularProductList DOM 才執行
-            if (popularProductList !== null) {
+            if (popularProductList) {
                 // 呈現 熱銷餐點列表
                 renderPopularProduct(productsData);
                 // 呈現愛心按鈕
@@ -63,7 +63,7 @@ function getAllProducts() {
             };
 
             // 確認有 selectProductsList DOM 才執行 
-            if (selectProductsList !== null) {
+            if (selectProductsList) {
                 // 呈現 主廚推薦餐點列表
                 renderSelectProducts(productsData);
                 // 呈現愛心按鈕
@@ -87,7 +87,7 @@ function getCartList() {
             renderCartList(cartData);
 
             // 確認購物車頁面 - 呈現購物車列表
-            if (checkCartList !== null) {
+            if (checkCartList) {
                 renderCheckCartList(cartData);
             };
         })
@@ -217,7 +217,8 @@ function addFavorites(productItem, productId) {
 // 我的最愛 - 切換愛心按鈕
 function toggleAddFavorite(id) {
     const addFavoriteBtn = document.querySelector(`#addFavorite i[data-favorite-id=${id}]`);
-    if (addFavoriteBtn !== null) {
+    
+    if (addFavoriteBtn) {
         addFavoriteBtn.classList.toggle("bi-heart");
         addFavoriteBtn.classList.toggle("bi-heart-fill");
     } else {
@@ -227,7 +228,7 @@ function toggleAddFavorite(id) {
 
 // 我的最愛 - 渲染切換愛心按鈕
 function renderAddFavoriteBtn() {
-    if (favoriteData !== null) {
+    if (favoriteData) {
         favoriteData.forEach((favorite) => toggleAddFavorite(favorite.id));
     } else {
         renderFavoriteList(favoriteData);
@@ -325,12 +326,10 @@ favoriteTable.addEventListener("click", function (e) {
 //我的最愛 - 移除單筆最愛
 function delFavorite(id) {
     // 確認 favoriteData 有資料，就會回傳true
-    if (!favoriteData) { return };
+    if (!favoriteData)  return;
 
     // 取得我的最愛列表內的 單一品項 id
-    const delFavoriteIndex = favoriteData.findIndex(
-        (favorite) => favorite.id === id
-    );
+    const delFavoriteIndex = favoriteData.findIndex((favorite) => favorite.id === id);
 
     // 如果favoriteData 沒有同樣的 id 品項就return中斷
     if (delFavoriteIndex === -1) return;

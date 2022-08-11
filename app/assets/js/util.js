@@ -25,6 +25,7 @@ if (goTopBtn !== null) {
 };
 
 
+//  回到頂端
 function handleScroll() {
     if (window.scrollY >= 600) {
         goTopBtn.classList.remove("d-none");
@@ -46,3 +47,5 @@ function scrollGoTop() {
 };
 
 
+
+// 隨機篩選

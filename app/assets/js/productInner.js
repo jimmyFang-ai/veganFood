@@ -2,12 +2,14 @@
 // 單一產品 - 菜單規格及注意事項內容
 const navTabContent = document.querySelector("#nav-tabContent");
 
+
+
 // 單一產品 - 產品內頁資訊
 function getProductItem() {
     // // 取得產品內頁網址 id
     const productId = location.href.split("=")[1];
 
-    if (productId !== undefined) {
+    if (productId) {
         // 取得單一產品
         axios.get(`${apiUrl}api/${apiPath}/product/${productId}`)
             .then(function (response) {
@@ -26,7 +28,6 @@ function getProductItem() {
 
                 // 渲染單一產品頁面
                 renderProductItem(productInnerData);
-
             })
             .catch(function (error) {
                 console.log(error.response.data);
@@ -81,14 +82,16 @@ function renderProductItem(data) {
 // 單一產品 - 計算產品數量
 const productNumWrap = document.querySelector("#productNumWrap");
 
+
 // 從數量 1 開始計算
 let numSum = 1;
 
-if (productNumWrap !== null) {
-    productInnerList.addEventListener("click", function (e) {
+if (productNumWrap) {
+    productNumWrap.addEventListener("click", function (e) {
         e.preventDefault();
         //  購買產品數量 DOM
         let productNum = document.querySelector("#productNum");
+        
 
         // 減少數量
         if (e.target.getAttribute("id") === "minusNumBtn") {
@@ -160,7 +163,7 @@ function renderPopularProduct(arr) {
 
 
 //熱銷餐點 - 新增購物車 及 新增最愛功能
-if (popularProductList !== null) {
+if (popularProductList) {
     popularProductList.addEventListener("click", function (e) {
         if (e.target.nodeName === "BUTTON") {
             //取出產品 id

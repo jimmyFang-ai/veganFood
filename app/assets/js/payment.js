@@ -11,18 +11,19 @@ function getOrderList() {
             // 訂單資料
             orderData = reponse.data.orders[0];
             
-            // Object.keys 物件迴圈取值，取出訂單資料內的產品物件
+            // Object.values 物件迴圈取值，取出訂單資料內的產品物件
             orderProductsData = Object.values(reponse.data.orders[0].products);
 
             let orderId = orderData.id;
 
-            if (orderProdcuts !== null) {
+            if (orderProdcuts) {
                 renderOrderProdcuts(orderProductsData);
             };
 
-            if (orderformInfo !== null) {
+            if (orderformInfo) {
                 renderOrderForm(orderData);
             };
+
 
             // 付款結帳
             payment(orderId);
@@ -111,8 +112,9 @@ function renderOrderProdcuts(arr) {
 
 //付款 - 結帳
 const payBtn = document.querySelector("#payBtn");
+
 function payment(orderId) {
-    if (payBtn !== null) {
+    if (payBtn) {
         payBtn.addEventListener("click", function (e) {
             e.preventDefault();
             axios.post(`${apiUrl}api/${apiPath}/pay/${orderId}`)

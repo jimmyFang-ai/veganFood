@@ -2,7 +2,8 @@
 const orderForm = document.querySelector("#orderForm"); // 訂購表單
 
 const submitFormBtn = document.querySelector("#submitFormBtn");// 送出表單按鈕
-if (submitFormBtn !== null) {
+
+if (submitFormBtn) {
     submitFormBtn.addEventListener("click", function (e) {
 
 
@@ -125,6 +126,5 @@ function createForm(orderObj) {
 function formCheck(errors) {
     Object.keys(errors).forEach(function (keys) {
         document.querySelector(`[data-message="${keys}"]`).textContent = errors[keys];
-        // console.log( document.querySelector(`[data-message="${keys}"]`));
     })
 };

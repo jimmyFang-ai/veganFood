@@ -82,7 +82,8 @@ function renderCheckCartList(arr) {
 };
 
 // 確認購物車 - 功能整合 (刪除和修改)
-if (checkCartList !== null) {
+if (checkCartList) {
+
     checkCartList.addEventListener("click", function (e) {
 
         // 取出 購物車id
@@ -94,9 +95,9 @@ if (checkCartList !== null) {
         // 取出 DOM id
         const btnId = e.target.getAttribute("id");
 
-        if (e.target.nodeName !== "BUTTON") {
-            return;
-        };
+        // 點擊不是按鈕就中斷執行
+        if (e.target.nodeName !== "BUTTON") return;
+
 
         // 單筆刪除
         if (e.target.getAttribute("id") === "delCartBtn") {
@@ -118,7 +119,7 @@ if (checkCartList !== null) {
 
 // 確認購物車 -  全部刪除
 const delAllCartBtn = document.querySelector("#delAllCartBtn");
-if (delAllCartBtn !== null) {
+if (delAllCartBtn) {
     delAllCartBtn.addEventListener("click", function (e) {
         e.preventDefault();
 
@@ -126,7 +127,6 @@ if (delAllCartBtn !== null) {
             .then(function (reponse) {
                 getCartList();
                 swalFn("購物車已清空", "success", 800);
-
             })
 
             .catch(function (error) {
