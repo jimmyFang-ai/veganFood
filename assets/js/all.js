@@ -41,7 +41,7 @@ function getAllProducts() {
       toggleLoading(false);
     }, 600); // 確認有 productsList DOM 才執行
 
-    if (productsList !== null) {
+    if (productsList) {
       //資料回傳後渲染畫面
       renderProductsList(productsData); //資料回傳 寫入分頁函式
 
@@ -52,7 +52,7 @@ function getAllProducts() {
 
     ; // 確認有 popularProductList DOM 才執行
 
-    if (popularProductList !== null) {
+    if (popularProductList) {
       // 呈現 熱銷餐點列表
       renderPopularProduct(productsData); // 呈現愛心按鈕
 
@@ -61,7 +61,7 @@ function getAllProducts() {
 
     ; // 確認有 selectProductsList DOM 才執行 
 
-    if (selectProductsList !== null) {
+    if (selectProductsList) {
       // 呈現 主廚推薦餐點列表
       renderSelectProducts(productsData); // 呈現愛心按鈕
 
@@ -82,7 +82,7 @@ function getCartList() {
 
     renderCartList(cartData); // 確認購物車頁面 - 呈現購物車列表
 
-    if (checkCartList !== null) {
+    if (checkCartList) {
       renderCheckCartList(cartData);
     }
 
@@ -186,7 +186,7 @@ function addFavorites(productItem, productId) {
 function toggleAddFavorite(id) {
   var addFavoriteBtn = document.querySelector("#addFavorite i[data-favorite-id=".concat(id, "]"));
 
-  if (addFavoriteBtn !== null) {
+  if (addFavoriteBtn) {
     addFavoriteBtn.classList.toggle("bi-heart");
     addFavoriteBtn.classList.toggle("bi-heart-fill");
   } else {
@@ -197,7 +197,7 @@ function toggleAddFavorite(id) {
 ; // 我的最愛 - 渲染切換愛心按鈕
 
 function renderAddFavoriteBtn() {
-  if (favoriteData !== null) {
+  if (favoriteData) {
     favoriteData.forEach(function (favorite) {
       return toggleAddFavorite(favorite.id);
     });
@@ -284,11 +284,7 @@ favoriteTable.addEventListener("click", function (e) {
 
 function delFavorite(id) {
   // 確認 favoriteData 有資料，就會回傳true
-  if (!favoriteData) {
-    return;
-  }
-
-  ; // 取得我的最愛列表內的 單一品項 id
+  if (!favoriteData) return; // 取得我的最愛列表內的 單一品項 id
 
   var delFavoriteIndex = favoriteData.findIndex(function (favorite) {
     return favorite.id === id;
@@ -300,7 +296,7 @@ function delFavorite(id) {
 "use strict";
 
 AOS.init({
-  offset: 60,
+  offset: 100,
   delay: 0,
   duration: 600,
   easing: 'ease',
@@ -346,20 +342,16 @@ function renderCheckCartList(arr) {
 
 ; // 確認購物車 - 功能整合 (刪除和修改)
 
-if (checkCartList !== null) {
+if (checkCartList) {
   checkCartList.addEventListener("click", function (e) {
     // 取出 購物車id
     var cartId = e.target.closest("tr").dataset.cartId; // 取出 購物車產品 id
 
     var productId = e.target.dataset.productId; // 取出 DOM id
 
-    var btnId = e.target.getAttribute("id");
+    var btnId = e.target.getAttribute("id"); // 點擊不是按鈕就中斷執行
 
-    if (e.target.nodeName !== "BUTTON") {
-      return;
-    }
-
-    ; // 單筆刪除
+    if (e.target.nodeName !== "BUTTON") return; // 單筆刪除
 
     if (e.target.getAttribute("id") === "delCartBtn") {
       e.preventDefault();
@@ -383,7 +375,7 @@ if (checkCartList !== null) {
 
 var delAllCartBtn = document.querySelector("#delAllCartBtn");
 
-if (delAllCartBtn !== null) {
+if (delAllCartBtn) {
   delAllCartBtn.addEventListener("click", function (e) {
     e.preventDefault();
     axios["delete"]("".concat(apiUrl, "api/").concat(apiPath, "/carts")).then(function (reponse) {
@@ -456,7 +448,7 @@ function renderSelectProducts(arr) {
 
 ; // 主廚推薦餐點 - 新增購物車 及 新增最愛功能
 
-if (selectProductsList !== null) {
+if (selectProductsList) {
   selectProductsList.addEventListener("click", function (e) {
     if (e.target.nodeName === "BUTTON") {
       //取出產品 id
@@ -511,7 +503,7 @@ var orderForm = document.querySelector("#orderForm"); // 訂購表單
 
 var submitFormBtn = document.querySelector("#submitFormBtn"); // 送出表單按鈕
 
-if (submitFormBtn !== null) {
+if (submitFormBtn) {
   submitFormBtn.addEventListener("click", function (e) {
     // 取出表單欄位的 dom 標籤元素
     var orderName = document.querySelector("#customerName"); // 姓名
@@ -632,7 +624,7 @@ function createForm(orderObj) {
 
 function formCheck(errors) {
   Object.keys(errors).forEach(function (keys) {
-    document.querySelector("[data-message=\"".concat(keys, "\"]")).textContent = errors[keys]; // console.log( document.querySelector(`[data-message="${keys}"]`));
+    document.querySelector("[data-message=\"".concat(keys, "\"]")).textContent = errors[keys];
   });
 }
 
@@ -647,18 +639,18 @@ var orderProdcuts = document.querySelector("#orderProdcuts"); // 付款 - 取得
 function getOrderList() {
   axios.get("".concat(apiUrl, "api/").concat(apiPath, "/orders")).then(function (reponse) {
     // 訂單資料
-    orderData = reponse.data.orders[0]; // Object.keys 物件迴圈取值，取出訂單資料內的產品物件
+    orderData = reponse.data.orders[0]; // Object.values 物件迴圈取值，取出訂單資料內的產品物件
 
     orderProductsData = Object.values(reponse.data.orders[0].products);
     var orderId = orderData.id;
 
-    if (orderProdcuts !== null) {
+    if (orderProdcuts) {
       renderOrderProdcuts(orderProductsData);
     }
 
     ;
 
-    if (orderformInfo !== null) {
+    if (orderformInfo) {
       renderOrderForm(orderData);
     }
 
@@ -699,7 +691,7 @@ function renderOrderProdcuts(arr) {
 var payBtn = document.querySelector("#payBtn");
 
 function payment(orderId) {
-  if (payBtn !== null) {
+  if (payBtn) {
     payBtn.addEventListener("click", function (e) {
       e.preventDefault();
       axios.post("".concat(apiUrl, "api/").concat(apiPath, "/pay/").concat(orderId)).then(function (response) {
@@ -722,7 +714,7 @@ function getProductItem() {
   // // 取得產品內頁網址 id
   var productId = location.href.split("=")[1];
 
-  if (productId !== undefined) {
+  if (productId) {
     // 取得單一產品
     axios.get("".concat(apiUrl, "api/").concat(apiPath, "/product/").concat(productId)).then(function (response) {
       // 宣告 productData 變數 儲存串接回來的資料
@@ -759,8 +751,8 @@ var productNumWrap = document.querySelector("#productNumWrap"); // 從數量 1 �
 
 var numSum = 1;
 
-if (productNumWrap !== null) {
-  productInnerList.addEventListener("click", function (e) {
+if (productNumWrap) {
+  productNumWrap.addEventListener("click", function (e) {
     e.preventDefault(); //  購買產品數量 DOM
 
     var productNum = document.querySelector("#productNum"); // 減少數量
@@ -814,7 +806,7 @@ function renderPopularProduct(arr) {
 
 ; //熱銷餐點 - 新增購物車 及 新增最愛功能
 
-if (popularProductList !== null) {
+if (popularProductList) {
   popularProductList.addEventListener("click", function (e) {
     if (e.target.nodeName === "BUTTON") {
       //取出產品 id
@@ -884,7 +876,7 @@ function renderProductsList(arr) {
 
 var toggleCategory = "全部商品"; // 判斷當下載入頁面是否有 btnGroup DOM 元素
 
-if (btnGroup !== null) {
+if (btnGroup) {
   // btnGroup 綁定監聽事件
   btnGroup.addEventListener("click", changeTab);
 }
@@ -940,7 +932,7 @@ function updateProductsList() {
 
 ; // 新增功能整合 - 新增購物車 及 新增最愛功能
 
-if (productsList !== null) {
+if (productsList) {
   // 在產品列表綁定監聽
   productsList.addEventListener("click", function (e) {
     if (e.target.nodeName === "BUTTON") {
@@ -959,11 +951,8 @@ if (productsList !== null) {
         e.preventDefault(); // 產品列表跑 forEach 將 id 取出來與 productId 比對，符合的話加入我的最愛
 
         productsData.forEach(function (productItem) {
-          if (productItem.id !== productId) {
-            return;
-          } // 切換愛心樣式
+          if (productItem.id !== productId) return; // 切換愛心樣式
           // 點擊到加入我的最愛時，沒有實心愛心就加上並新增一筆資料到favoriteData
-
 
           if (e.target.children[0].classList.contains("bi-heart")) {
             // 加入我的愛心
@@ -1033,14 +1022,14 @@ function renderPages(data, nowPage) {
 
   renderProductsList(currentPageData); // 呈現出分頁按鈕
 
-  renderPageBtn(pageInfo); // console.log(`全部資料:${data.length} 每一頁顯示:${dataPerPage}筆 總頁數:${totalPages}`);
+  renderPageBtn(pageInfo);
 }
 
 ; // 取得分頁 DOM 元素
 
 var pageId = document.querySelector("#pageId"); // 在 pageId 綁定監聽
 
-if (pageId !== null) {
+if (pageId) {
   pageId.addEventListener("click", switchPage);
 }
 
@@ -1056,7 +1045,7 @@ function renderPageBtn(pageInfo) {
 
     for (var i = 1; i <= totalPages; i++) {
       // 一開始預設顯示第一頁，如果是第一頁會加上 .active 樣式
-      str += Number(pageInfo.currentPage) === i ? "<li class=\"page-item active\"><a class=\"page-link\" href=\"#\" aria-label=\"Previous\" data-page=\"".concat(i, "\">").concat(i, "</a></li>") : "<li class=\"page-item\"><a class=\"page-link\" href=\"#\" data-page=\"".concat(i, "\">").concat(i, "</a></li>");
+      str += Number(pageInfo.currentPage) === i ? "<li class=\"page-item active\"><a class=\"page-link\" href=\"#\"  data-page=\"".concat(i, "\">").concat(i, "</a></li>") : "<li class=\"page-item\"><a class=\"page-link\" href=\"#\" data-page=\"".concat(i, "\">").concat(i, "</a></li>");
     }
 
     ; // 點選下一頁
@@ -1066,7 +1055,7 @@ function renderPageBtn(pageInfo) {
     //總頁數小於 1 頁，只顯示分頁按鈕
     for (var _i = 1; _i <= totalPages; _i++) {
       // 一開始預設顯示第一頁，如果是第一頁會加上 .active 樣式
-      str += Number(pageInfo.currentPage) === _i ? "<li class=\"page-item active\"><a class=\"page-link\" href=\"#\" aria-label=\"Previous\" data-page=\"".concat(_i, "\">").concat(_i, "</a></li>") : "<li class=\"page-item\"><a class=\"page-link\" href=\"#\" data-page=\"".concat(_i, "\">").concat(_i, "</a></li>");
+      str += Number(pageInfo.currentPage) === _i ? "<li class=\"page-item active\"><a class=\"page-link\" href=\"#\"  data-page=\"".concat(_i, "\">").concat(_i, "</a></li>") : "<li class=\"page-item\"><a class=\"page-link\" href=\"#\" data-page=\"".concat(_i, "\">").concat(_i, "</a></li>");
     }
 
     ;
@@ -1198,7 +1187,7 @@ if (goTopBtn !== null) {
   document.addEventListener("scroll", handleScroll);
 }
 
-;
+; //  回到頂端
 
 function handleScroll() {
   if (window.scrollY >= 600) {
@@ -1221,5 +1210,5 @@ function scrollGoTop() {
   }
 }
 
-;
+; // 隨機篩選
 //# sourceMappingURL=all.js.map
